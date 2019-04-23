@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
     <title>General Shop</title>
 
@@ -14,69 +14,83 @@
 
     <!--Latest compiled and minified Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 </head>
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>General Shop</h1>
-</div>
-
-<div class="container">
-    <div>
-        <label>Supplier</label>
-        <select name="suppliers" id="suppliers">
-            <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
-            <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
-            <option th:each="supplier: ${suppliers}" th:value="${supplier.name}" th:text="${supplier.name}"></option>
-        </select>
-    </div>
-    <div>
-        <label>Categories</label>
-        <select name="" id="">
-            <!--/*@thymesVar id="categories" type="java.util.List"*/-->
-            <!--/*@thymesVar id="category" type="com.codecool.shop.model.ProductCategory"*/-->
-            <!--/*@thymesVar id="name" type="java.lang.String"*/-->
-            <option th:each="category: ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
-        </select>
+    <div class="jumbotron text-center">
+        <h1>General Shop</h1>
     </div>
 
-    <div id="products" class="row">
-        <!--/*@thymesVar id="products" type="com.codecool.shop.model.Product"*/-->
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="card-header">
-                    <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                    <p class="card-text" th:text="${prod.description}">Product description... </p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+
+    <div class="container">
+        <div id="search-container">
+            <div>
+                <form action="/#" th:action="@{/}" method="post">
+                    <label>Categories</label>
+                    <select name="category" id="category">
+                        <!--/*@thymesVar id="category" type="com.codecool.shop.model.ProductCategory"*/-->
+                        <!--/*@thymesVar id="categories" type="java.util.List"*/-->
+                        <option disabled selected value> -- select an option --</option>
+                        <option th:each="category: ${categories}" th:value="${category.name}"
+                                th:text="${category.name}"></option>
+                    </select>
+                    <label>Supplier</label>
+                    <select name="supplier" id="supplier">
+                        <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
+                        <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
+                        <option disabled selected value> -- select an option --</option>
+                        <option th:each="supplier: ${suppliers}" th:value="${supplier.name}"
+                                th:text="${supplier.name}"></option>
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
+            <div th:if="${categ}" th:text="${categ.name}"></div>
+        </div>
+
+        <div id="products" class="row" th:if="${products != null}">
+            <!--/*@thymesVar id="products" type="com.codecool.shop.model.Product"*/-->
+            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+                <div class="card">
+                    <img class="" src="http://placehold.it/400x250/000/fff"
+                         th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
+                    <div class="card-header">
+                        <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                        <p class="card-text" th:text="${prod.description}">Product description... </p>
                     </div>
-                    <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                        </div>
+                        <div class="card-text">
+                            <a class="btn btn-success" href="#">Add to cart</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
-
-<div th:replace="footer.html :: copy"></div>
+    <div th:replace="footer.html :: copy"></div>
 
 </body>
 </html>
