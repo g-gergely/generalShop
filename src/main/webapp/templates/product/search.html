@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div class="container" th:fragment="search">
+        <div id="search-container">
+            <div>
+                <form action="/#" th:action="@{/}" method="post">
+                    <label>Categories</label>
+                    <select name="category" id="category">
+                        <!--/*@thymesVar id="category" type="com.codecool.shop.model.ProductCategory"*/-->
+                        <!--/*@thymesVar id="categories" type="java.util.List"*/-->
+                        <option disabled selected value> -- select an option --</option>
+                        <!--/*@thymesVar id="selectedCateg" type="java.lang.String"*/-->
+                        <option th:each="category: ${categories}" th:value="${category.name}"
+                                th:text="${category.name}"
+                                th:selected="${selectedCateg} == ${category.name}">
+                        </option>
+                    </select>
+                    <label>Supplier</label>
+                    <select name="supplier" id="supplier">
+                        <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
+                        <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
+                        <option disabled selected value> -- select an option --</option>
+                        <!--/*@thymesVar id="selectedSupplier" type="java.lang.String"*/-->
+                        <option th:each="supplier: ${suppliers}" th:value="${supplier.name}"
+                                th:text="${supplier.name}"
+                                th:selected="${selectedSupplier} == ${supplier.name}">
+                        </option>
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

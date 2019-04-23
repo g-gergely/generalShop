@@ -36,67 +36,16 @@
         <h1>General Shop</h1>
     </div>
 
+    <div th:replace="product/search.html :: search"></div>
 
-    <div class="container">
-        <div id="search-container">
-            <div>
-                <form action="/#" th:action="@{/}" method="post">
-                    <label>Categories</label>
-                    <select name="category" id="category">
-                        <!--/*@thymesVar id="category" type="com.codecool.shop.model.ProductCategory"*/-->
-                        <!--/*@thymesVar id="categories" type="java.util.List"*/-->
-                        <option disabled selected value> -- select an option --</option>
-                        <!--/*@thymesVar id="selectedCateg" type="java.lang.String"*/-->
-                        <option th:each="category: ${categories}" th:value="${category.name}"
-                                th:text="${category.name}"
-                                th:selected="${selectedCateg} == ${category.name}">
-                        </option>
-                    </select>
-                    <label>Supplier</label>
-                    <select name="supplier" id="supplier">
-                        <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
-                        <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
-                        <option disabled selected value> -- select an option --</option>
-                        <!--/*@thymesVar id="selectedSupplier" type="java.lang.String"*/-->
-                        <option th:each="supplier: ${suppliers}" th:value="${supplier.name}"
-                                th:text="${supplier.name}"
-                                th:selected="${selectedSupplier} == ${supplier.name}">
-                        </option>
-                    </select>
-                    <button type="submit">Filter</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="card">
-            <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
-            <div th:if="${categ}" th:text="${categ.name}"></div>
-        </div>
-
-        <div id="products" class="row" th:if="${products != null}">
-            <!--/*@thymesVar id="products" type="com.codecool.shop.model.Product"*/-->
-            <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
-                <div class="card">
-                    <img class="" src="http://placehold.it/400x250/000/fff"
-                         th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>
-                    <div class="card-header">
-                        <h4 class="card-title" th:text="${prod.name}">Product name</h4>
-                        <p class="card-text" th:text="${prod.description}">Product description... </p>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-text">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                        </div>
-                        <div class="card-text">
-                            <a class="btn btn-success" href="#">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="card">
+        <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
+        <div th:if="${categ}" th:text="|${categ.name} Generals|"></div>
     </div>
 
-    <div th:replace="footer.html :: copy"></div>
+    <div th:replace="product/products.html :: prod"></div>
+
+    <div th:replace="footer.html :: foot"></div>
 
 </body>
 </html>
