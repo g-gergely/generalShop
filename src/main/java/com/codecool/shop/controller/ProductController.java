@@ -21,11 +21,17 @@ import java.util.*;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
+    private static HttpSession cart;
+
+    private static Map<Integer, Integer> cartMap = new HashMap<>();
+
+    public static Map<Integer, Integer> getCartMap() {
+        return cartMap;
+    }
+
     public static HttpSession getCart() {
         return cart;
     }
-
-    private static HttpSession cart;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,15 +51,13 @@ public class ProductController extends HttpServlet {
         context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         engine.process("product/index.html", context, response.getWriter());
 
+        String addId = request.getParameter("item_id");
 
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String addId = request.getParameter("prodId");
-        System.out.println(addId);
         if(addId != null) {
-            cart.setAttribute(addId, 1);
+            int amount = cartMap.get(Integer.parseInt(addId)) != null ? cartMap.get(Integer.parseInt(addId)) + 1 : 1;
+            cartMap.put(Integer.parseInt(addId), amount);
+            cart.setAttribute(addId, cartMap.get(Integer.parseInt(addId)));
         }
     }
+
 }
