@@ -27,9 +27,9 @@ import java.util.stream.Stream;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-    ProductDao productDataStore = ProductDaoMem.getInstance();
-    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    SupplierDao supplierDao = SupplierDaoMem.getInstance();
+    private ProductDao productDataStore = ProductDaoMem.getInstance();
+    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    private SupplierDao supplierDao = SupplierDaoMem.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
@@ -55,9 +55,6 @@ public class ProductController extends HttpServlet {
         String category = request.getParameter("category");
         String supplier = request.getParameter("supplier");
 
-        System.out.println(category);
-        System.out.println(supplier);
-
         Map params = new HashMap<String, Object>() {{
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
@@ -66,20 +63,13 @@ public class ProductController extends HttpServlet {
         if (category == null && supplier == null) {
             response.sendRedirect("/");
         } else {
-            Stream<Product> productStream = productDataStore.getAll().stream();
-
-            if (category != null) {
-                productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
-
-            }
-            if (supplier != null) {
-                productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
-            }
-
-            List<Product> products = productStream.collect(Collectors.toList());
+            List<Product> products = getProducts(category, supplier);
 
             if (products.size() > 0) {
-                ProductCategory newCategory = products.stream().map(Product::getProductCategory).findFirst().orElse(null);
+                ProductCategory newCategory = products.stream()
+                        .map(Product::getProductCategory)
+                        .findFirst()
+                        .orElse(null);
 
                 params.put("products", products);
                 params.put("categ", newCategory);
@@ -88,5 +78,19 @@ public class ProductController extends HttpServlet {
             params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
             engine.process("product/index", context, response.getWriter());
         }
+    }
+
+    private List<Product> getProducts(String category, String supplier) {
+        Stream<Product> productStream = productDataStore.getAll().stream();
+
+        if (category != null) {
+            productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
+
+        }
+        if (supplier != null) {
+            productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
+        }
+
+        return productStream.collect(Collectors.toList());
     }
 }
