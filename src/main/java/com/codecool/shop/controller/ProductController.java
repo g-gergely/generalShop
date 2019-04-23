@@ -28,18 +28,16 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
 
-//        Map params = new HashMap<>();
-//        params.put("category", productCategoryDataStore.find(1));
-//        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        Map params = new HashMap<String, Object>() {{
+            put("category", productCategoryDataStore.find(1));
+            put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+            put("suppliers", supplierDao.getAll());
+            put("categories", productCategoryDataStore.getAll());
+        }};
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-//        context.setVariables(params);
-        context.setVariable("recipient", "World");
-        context.setVariable("category", productCategoryDataStore.find(1));
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-        context.setVariable("suppliers", supplierDao.getAll());
-        context.setVariable("categories", productCategoryDataStore.getAll());
+        params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         engine.process("product/index.html", context, resp.getWriter());
     }
 
