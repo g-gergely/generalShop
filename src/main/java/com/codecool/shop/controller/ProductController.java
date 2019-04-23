@@ -38,6 +38,8 @@ public class ProductController extends HttpServlet {
 
         Map params = new HashMap<String, Object>() {{
             put("categ", productCategoryDataStore.find(1));
+            put("selectedCateg", "");
+            put("selectedSupplier", "");
             put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
@@ -64,15 +66,16 @@ public class ProductController extends HttpServlet {
             response.sendRedirect("/");
         } else {
             List<Product> products = getProducts(category, supplier);
+            ProductCategory newCategory = products.stream()
+                    .map(Product::getProductCategory)
+                    .findFirst()
+                    .orElse(null);
 
             if (products.size() > 0) {
-                ProductCategory newCategory = products.stream()
-                        .map(Product::getProductCategory)
-                        .findFirst()
-                        .orElse(null);
-
                 params.put("products", products);
                 params.put("categ", newCategory);
+                params.put("selectedCateg", newCategory.getName());
+                params.put("selectedSupplier", supplier);
             }
 
             params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
