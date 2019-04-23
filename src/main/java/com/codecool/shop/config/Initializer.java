@@ -24,19 +24,48 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-        supplierDataStore.add(amazon);
-        Supplier lenovo = new Supplier("Lenovo", "Computers");
-        supplierDataStore.add(lenovo);
+        Supplier rome = new Supplier("Rome", "A millenium of Roman virtue");
+        Supplier arpino = new Supplier("Arpino", "The blood of Lazio");
+        Supplier pella = new Supplier("Pella", "World tour from Pella coming to you soon");
+        Supplier sparta = new Supplier("Sparta", "A handful of people against the world");
+        Supplier carthage = new Supplier("Carthage", "Hear the mountains rumble");
+        Supplier deluun = new Supplier("Delüün Boldog", "The cradle of the Golden Horde");
+        Supplier hazajarat = new Supplier("Hazajarat", "Birth of the Arrow");
+        Supplier owari = new Supplier("Owari", "The start of something big");
+        Supplier mikagawa = new Supplier("Mikagawa", "Union for all");
+        supplierDataStore.add(rome);
+        supplierDataStore.add(arpino);
+        supplierDataStore.add(pella);
+        supplierDataStore.add(sparta);
+        supplierDataStore.add(carthage);
+        supplierDataStore.add(deluun);
+        supplierDataStore.add(hazajarat);
+        supplierDataStore.add(owari);
+        supplierDataStore.add(mikagawa);
 
         //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
+        ProductCategory roman = new ProductCategory("Roman", "General", "A roman genera always leads from the front.");
+        ProductCategory greek = new ProductCategory("Greek", "General", "Philosophy and world domination from the best.");
+        ProductCategory carthaginian = new ProductCategory("Carthaginian", "General", "The most surprising technologies from history.");
+        ProductCategory mongolian = new ProductCategory("Mongolian", "General", "Horses like the wind, arrows like death.");
+        ProductCategory japanese = new ProductCategory("Japanese", "General", "Tenka Fubu.");
+        productCategoryDataStore.add(roman);
+        productCategoryDataStore.add(greek);
+        productCategoryDataStore.add(carthaginian);
+        productCategoryDataStore.add(mongolian);
+        productCategoryDataStore.add(japanese);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Hannibal Barca", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
-        productDataStore.add(new Product("Gnaeus Pompeius", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
-        productDataStore.add(new Product("Alexander The Great", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
-        productDataStore.add(new Product("Julius Caesar", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
+        productDataStore.add(new Product("Julius Caesar", 49.9f, "USD", "One of the greatest general of the world. Known for his victories over the Gallic tribes and as the main reason for the fall of the Roman Republic", roman, rome));
+        productDataStore.add(new Product("Gaius Marius", 479, "USD", "The seven time consul of Rome known for his military reforms and victories over the Numidians, the Cambri and Teutones.", roman, arpino));
+        productDataStore.add(new Product("Alexander The Great", 89, "USD", "The greatest general of all time, conqueror of Persia, son of Philip II.", greek, pella));
+        productDataStore.add(new Product("Leonidas", 49.9f, "USD", "The famous Spartan general who held the Thermopülai against the persian masses.", greek, sparta));
+        productDataStore.add(new Product("Hannibal Barca", 49.9f, "USD", "The greatest Carthaginian general who crossed the Alps with his army to surprise the Roman on their own turf.", carthaginian, carthage));
+        productDataStore.add(new Product("Hasdrubal Barca", 49.9f, "USD", "Younger brother of the famous Hannibal, held the Roman armies for years at the Iberian peninsula.", carthaginian, carthage));
+        productDataStore.add(new Product("Genghis Khan", 49.9f, "USD", "Unifier and first Khan of the Mongols. His empire was one of the greatest in world history rivaled only by the British.", mongolian, deluun));
+        productDataStore.add(new Product("Jebe", 49.9f, "USD", "Jebe, the Arrow - one of the most prominent generals of the famous Genghis Khan.", mongolian, hazajarat));
+        productDataStore.add(new Product("Oda Nobunaga", 49.9f, "USD", "The first of the 3 unifiers of Japan, lord of Owari.", japanese, owari));
+        productDataStore.add(new Product("Tokugawa Ieyasu", 49.9f, "USD", "The third and final unifier of Japan, his shogunate lasted for centuries.", japanese, mikagawa));
+
     }
 }
