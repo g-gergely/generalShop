@@ -27,12 +27,14 @@ import java.util.stream.Stream;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
+    ProductDao productDataStore = ProductDaoMem.getInstance();
+    ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    SupplierDao supplierDao = SupplierDaoMem.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, resp, request.getServletContext());
 
         Map params = new HashMap<String, Object>() {{
             put("categ", productCategoryDataStore.find(1));
@@ -41,17 +43,12 @@ public class ProductController extends HttpServlet {
             put("categories", productCategoryDataStore.getAll());
         }};
 
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, resp, request.getServletContext());
         params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         engine.process("product/index", context, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
@@ -65,38 +62,31 @@ public class ProductController extends HttpServlet {
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
         }};
+
         if (category == null && supplier == null) {
             response.sendRedirect("/");
         } else {
-            List<Product> products = new ArrayList<>();
+            Stream<Product> productStream = productDataStore.getAll().stream();
 
-            if (category != null && supplier == null) {
-                products = productDataStore.getAll().stream()
-                        .filter(product -> product.getProductCategory().getName().equals(category))
-                        .collect(Collectors.toList());
+            if (category != null) {
+                productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
 
-            } else if (category == null && supplier != null) {
-                products = productDataStore.getAll().stream()
-                        .filter(product -> product.getSupplier().getName().equals(supplier))
-                        .collect(Collectors.toList());
-
-            } else if (category != null && supplier != null) {
-                products = productDataStore.getAll().stream()
-                        .filter(product -> product.getProductCategory().getName().equals(category))
-                        .filter(product -> product.getSupplier().getName().equals(supplier))
-                        .collect(Collectors.toList());
+            }
+            if (supplier != null) {
+                productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
             }
 
+            List<Product> products = productStream.collect(Collectors.toList());
+
             if (products.size() > 0) {
-                ProductCategory newCateg = products.stream().map(Product::getProductCategory).findFirst().orElse(null);
+                ProductCategory newCategory = products.stream().map(Product::getProductCategory).findFirst().orElse(null);
 
                 params.put("products", products);
-                params.put("categ", newCateg);
+                params.put("categ", newCategory);
             }
 
             params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
             engine.process("product/index", context, response.getWriter());
-
         }
     }
 }
