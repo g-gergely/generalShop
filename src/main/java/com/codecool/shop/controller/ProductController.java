@@ -31,13 +31,9 @@ public class ProductController extends HttpServlet {
     private SupplierDao supplierDao = SupplierDaoMem.getInstance();
 
     private static Map<String, Integer> cartMap = new HashMap<>();
-    private static Map<Integer, Integer> imageMap = new HashMap<>();
 
     public static Map<String, Integer> getCartMap() {
         return cartMap;
-    }
-    public static Map<Integer, Integer> getImageMap() {
-        return imageMap;
     }
 
     @Override

@@ -22,10 +22,6 @@ public class CartController extends HttpServlet {
 
         context.setVariable("cartMap", ProductController.getCartMap());
         engine.process("product/cart", context, response.getWriter());
-
-
-        /*HttpSession cart = request.getSession(true);
-        cart.setAttribute();*/
     }
 
 }
