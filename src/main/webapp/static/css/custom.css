@@ -1,8 +1,15 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 80vw;
+}
+
 body {
     background-image: url("/static/img/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    position: relative;
 }
 
 .glyphicon {
@@ -122,8 +129,10 @@ img {
 #footer {
     text-align: center;
     width: 100%;
+    right: 0;
     bottom: 0;
-    position: relative;
+    left: 0;
+    position: absolute;
     color: #ffffff;
 }
 
