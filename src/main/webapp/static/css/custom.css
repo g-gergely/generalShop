@@ -1,3 +1,10 @@
+body {
+    background-image: url("/static/img/background.jpg");
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-attachment: fixed;
+}
+
 .glyphicon {
     margin-right: 5px;
 }
