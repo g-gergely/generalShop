@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,12 +56,15 @@ public class ProductController extends HttpServlet {
         String category = request.getParameter("category");
         String supplier = request.getParameter("supplier");
 
+        System.out.println(category);
+        System.out.println(supplier);
+
         Map params = new HashMap<String, Object>() {{
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
         }};
 
-        if (category == null && supplier == null) {
+        if (category.equals("") && supplier.equals("")) {
             response.sendRedirect("/");
         } else {
             List<Product> products = getProducts(category, supplier);
@@ -86,11 +88,11 @@ public class ProductController extends HttpServlet {
     private List<Product> getProducts(String category, String supplier) {
         Stream<Product> productStream = productDataStore.getAll().stream();
 
-        if (category != null) {
+        if (!category.equals("")) {
             productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
 
         }
-        if (supplier != null) {
+        if (!supplier.equals("")) {
             productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
         }
 
