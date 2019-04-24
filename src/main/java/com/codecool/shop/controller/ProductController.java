@@ -29,8 +29,8 @@ public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoMem.getInstance();
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     private SupplierDao supplierDao = SupplierDaoMem.getInstance();
-    String category = "";
-    String supplier = "";
+    private String category = "";
+    private String supplier = "";
 
     private static Map<String, Integer> cartMap = new HashMap<>();
 
@@ -39,10 +39,9 @@ public class ProductController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, resp, request.getServletContext());
-
+        WebContext context = new WebContext(request, response, request.getServletContext());
 
         Map params = new HashMap<String, Object>() {{
             put("categ", productCategoryDataStore.find(1));
@@ -54,7 +53,7 @@ public class ProductController extends HttpServlet {
         }};
 
         params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
-        engine.process("product/index", context, resp.getWriter());
+        engine.process("product/index", context, response.getWriter());
 
         String addId = request.getParameter("item_id");
 
@@ -106,6 +105,7 @@ public class ProductController extends HttpServlet {
             productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
 
         }
+
         if (!supplier.equals("")) {
             productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
         }

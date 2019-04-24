@@ -42,5 +42,4 @@ public class CartController extends HttpServlet {
         context.setVariable("cartMap", cart);
         engine.process("product/cart", context, response.getWriter());
     }
-
 }
