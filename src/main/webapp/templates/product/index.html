@@ -34,27 +34,28 @@
 </head>
 
 <body>
-    <div class="jumbotron text-center">
-        <h1>General Shop</h1>
-    </div>
-    <div class="d-flex flex-row-reverse">
-        <a class="btn btn-info cart" href="/cart">
-            <i class="fas fa-shopping-cart"></i> To cart
-        </a>
+    <div id="wrapper">
+        <div class="jumbotron text-center">
+            <h1>General Shop</h1>
+        </div>
+        <div class="d-flex flex-row-reverse">
+            <a class="btn btn-info cart" href="/cart">
+                <i class="fas fa-shopping-cart"></i> To cart
+            </a>
 
-        <div th:replace="product/search.html :: search"></div>
-    </div>
-
-    <div id="main-content">
-        <div class="card" id="current-categ">
-            <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
-            <div id="current-categ-name" th:if="${categ}" th:text="|${categ.name} Generals|"></div>
+            <div th:replace="product/search.html :: search"></div>
         </div>
 
-        <div th:replace="product/products.html :: prods"></div>
+        <div id="main-content">
+            <div class="card" id="current-categ">
+                <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
+                <div id="current-categ-name" th:if="${categ}" th:text="|${categ.name} Generals|"></div>
+            </div>
+
+            <div th:replace="product/products.html :: prods"></div>
+        </div>
+
+        <div th:replace="footer.html :: foot"></div>
     </div>
-
-    <div th:replace="footer.html :: foot"></div>
-
 </body>
 </html>
