@@ -47,11 +47,11 @@
         </tr>
         <tr th:each="general: ${cartMap}">
             <td><img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${#strings.substringAfter(general.key, '?')} + '.jpg'" alt="" /></td>
-            <td th:text="${#strings.substring(general.key, 0, #strings.indexOf(general.key, '?'))}" />
+            <td th:text="${#strings.substring(general.key, 0, #strings.indexOf(general.key, '?'))}"></td>
             <td>
                 <form action="/cart">
                     <button class="btn btn-danger" type="submit" name="remove" th:value="${general.key}">-</button>
-                    <span th:text="${general.value}" />
+                    <span th:text="${general.value}"></span>
                     <button class="btn btn-success" type="submit" name="add" th:value="${general.key}">+</button>
                 </form>
             </td>

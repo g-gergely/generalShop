@@ -55,7 +55,7 @@ public class ProductController extends HttpServlet {
 
         String addId = request.getParameter("item_id");
 
-        if(addId != null) {
+        if (addId != null) {
             Product chosen = productDataStore.find(Integer.parseInt(addId));
             int amount = cartMap.get(chosen.getName() + "?" + addId) != null ? cartMap.get(chosen.getName() + "?" + addId) + 1 : 1;
             cartMap.put(chosen.getName() + "?" + addId, amount);

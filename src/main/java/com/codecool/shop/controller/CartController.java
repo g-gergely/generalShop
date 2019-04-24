@@ -22,13 +22,12 @@ public class CartController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-
         String addKey = request.getParameter("add");
         String removeKey = request.getParameter("remove");
 
         if (addKey != null) {
             int value = cart.get(addKey);
-            cart.put(addKey, value+1);
+            cart.put(addKey, value + 1);
         }
 
         if (removeKey != null) {
