@@ -5,6 +5,10 @@ body {
     background-attachment: fixed;
 }
 
+.flex-row-reverse {
+    margin-right: 2%;
+}
+
 .glyphicon {
     margin-right: 5px;
 }
