@@ -61,3 +61,63 @@
 #search-container {
     display: inline-block;
 }
+
+#main-content, #search-container {
+    top: 0;
+    left: 0;
+}
+
+#main-content {
+    padding: 20px;
+}
+
+#search-container {
+    padding-left: 30px;
+}
+
+img {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.container {
+    padding: 0;
+    margin: 0;
+}
+
+.img-container {
+    text-align: center;
+}
+
+.jumbotron {
+    height: 80px;
+    padding: 15px;
+}
+
+#current-categ {
+    text-align: center;
+    width: 100%;
+}
+
+#current-categ-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#footer {
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+}
+
+button {
+    border-radius: 7px;
+}
+
+.card {
+    width: 300px;
+    margin: 10px;
+}

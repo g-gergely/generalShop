@@ -17,7 +17,6 @@
                         </option>
                     </select>
                     <label>Supplier</label>
-                    <button type="submit">Filter</button>
                     <select name="supplier" id="supplier">
                         <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
                         <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
@@ -28,6 +27,7 @@
                                 th:selected="${selectedSupplier} == ${supplier.name}">
                         </option>
                     </select>
+                    <button type="submit">Filter</button>
                 </form>
             </div>
         </div>

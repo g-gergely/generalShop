@@ -56,9 +56,6 @@ public class ProductController extends HttpServlet {
         String category = request.getParameter("category");
         String supplier = request.getParameter("supplier");
 
-        System.out.println(category);
-        System.out.println(supplier);
-
         Map params = new HashMap<String, Object>() {{
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
