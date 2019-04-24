@@ -161,3 +161,29 @@ button {
 .card-title {
     font-weight: bold;
 }
+
+.table {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 50%;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.cart-image {
+    height: 100px;
+    width: 100px;
+}
+
+#cart-container {
+    padding: 10px;
+}
+
+span {
+    padding: 4px;
+}
+
+#cart-back {
+    margin: 10px;
+}
