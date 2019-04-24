@@ -21,7 +21,7 @@ public class CartController extends HttpServlet {
         WebContext context = new WebContext(request, response, request.getServletContext());
 
         context.setVariable("cartMap", ProductController.getCartMap());
-        engine.process("product/cart.html", context, response.getWriter());
+        engine.process("product/cart", context, response.getWriter());
 
 
         /*HttpSession cart = request.getSession(true);

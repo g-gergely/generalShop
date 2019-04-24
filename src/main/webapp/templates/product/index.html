@@ -32,20 +32,16 @@
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>General Shop</h1>
-</div>
+    <div class="jumbotron text-center">
+        <h1>General Shop</h1>
+    </div>
 
-<div class="card-text">
-    <a class="btn btn-info" href="/cart">To cart</a>
-</div>
-
-<div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+    <div class="card-text">
+        <a class="btn btn-info" href="/cart">To cart</a>
     </div>
 
     <div th:replace="product/search.html :: search"></div>
+
 
     <div class="card">
         <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->

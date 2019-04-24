@@ -17,7 +17,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +56,14 @@ public class ProductController extends HttpServlet {
 
         params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         engine.process("product/index", context, resp.getWriter());
+
+        String addId = request.getParameter("item_id");
+
+        if(addId != null) {
+            Product chosen = productDataStore.find(Integer.parseInt(addId));
+            int amount = cartMap.get(chosen.getName() + "?" + addId) != null ? cartMap.get(chosen.getName() + "?" + addId) + 1 : 1;
+            cartMap.put(chosen.getName() + "?" + addId, amount);
+        }
     }
 
     @Override
@@ -93,14 +100,6 @@ public class ProductController extends HttpServlet {
 
             params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
             engine.process("product/index", context, response.getWriter());
-
-            String addId = request.getParameter("item_id");
-
-            if(addId != null) {
-                Product chosen = productDataStore.find(Integer.parseInt(addId));
-                int amount = cartMap.get(chosen.getName() + "?" + addId) != null ? cartMap.get(chosen.getName() + "?" + addId) + 1 : 1;
-                cartMap.put(chosen.getName() + "?" + addId, amount);
-            }
         }
     }
 
