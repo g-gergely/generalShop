@@ -5,7 +5,7 @@
         <div id="search-container">
             <div>
                 <form action="/#" th:action="@{/}" method="post">
-                    <label>Categories</label>
+                    <label class="search-label">Categories</label>
                     <select name="category" id="category">
                         <!--/*@thymesVar id="category" type="com.codecool.shop.model.ProductCategory"*/-->
                         <!--/*@thymesVar id="categories" type="java.util.List"*/-->
@@ -16,7 +16,8 @@
                                 th:selected="${selectedCateg} == ${category.name}">
                         </option>
                     </select>
-                    <label>Supplier</label>
+
+                    <label class="search-label">Supplier</label>
                     <select name="supplier" id="supplier">
                         <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
                         <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
