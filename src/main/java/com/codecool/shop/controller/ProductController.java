@@ -29,6 +29,8 @@ public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoMem.getInstance();
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     private SupplierDao supplierDao = SupplierDaoMem.getInstance();
+    String category = "";
+    String supplier = "";
 
     private static Map<String, Integer> cartMap = new HashMap<>();
 
@@ -41,10 +43,11 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, resp, request.getServletContext());
 
+
         Map params = new HashMap<String, Object>() {{
             put("categ", productCategoryDataStore.find(1));
-            put("selectedCateg", "");
-            put("selectedSupplier", "");
+            put("selectedCateg", category);
+            put("selectedSupplier", supplier);
             put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
@@ -67,8 +70,8 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-        String category = request.getParameter("category");
-        String supplier = request.getParameter("supplier");
+        category = request.getParameter("category");
+        supplier = request.getParameter("supplier");
 
         Map params = new HashMap<String, Object>() {{
             put("suppliers", supplierDao.getAll());
