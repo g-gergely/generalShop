@@ -39,10 +39,19 @@
 </div>
 
 <div class="card-text">
-    <tr th:each="general: ${cartMap}">
-        <td th:text="${general.key}" />
-        <td th:text="${general.value}" />
-    </tr>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Amount</th>
+        </tr>
+        <tr th:each="general: ${cartMap}">
+            <td th:text="${general.key}" />
+            <td th:text="${general.value}" />
+        </tr>
+    </table>
+</div>
+
+<div class="card-text">
     <h4 class="card-title" th:text="${cart.getValue('1')}" th:unless="${cart.getValue('1') == null}">Product name</h4>
 </div>
 
