@@ -30,6 +30,16 @@ public class ProductController extends HttpServlet {
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     private SupplierDao supplierDao = SupplierDaoMem.getInstance();
 
+    private static Map<String, Integer> cartMap = new HashMap<>();
+    private static Map<Integer, Integer> imageMap = new HashMap<>();
+
+    public static Map<String, Integer> getCartMap() {
+        return cartMap;
+    }
+    public static Map<Integer, Integer> getImageMap() {
+        return imageMap;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
@@ -46,6 +56,14 @@ public class ProductController extends HttpServlet {
 
         params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         engine.process("product/index", context, resp.getWriter());
+
+        String addId = request.getParameter("item_id");
+
+        if(addId != null) {
+            Product chosen = productDataStore.find(Integer.parseInt(addId));
+            int amount = cartMap.get(chosen.getName() + "?" + addId) != null ? cartMap.get(chosen.getName() + "?" + addId) + 1 : 1;
+            cartMap.put(chosen.getName() + "?" + addId, amount);
+        }
     }
 
     @Override
