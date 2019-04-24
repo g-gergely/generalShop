@@ -29,7 +29,7 @@ public class Initializer implements ServletContextListener {
         Supplier pella = new Supplier("Pella", "World tour from Pella coming to you soon");
         Supplier sparta = new Supplier("Sparta", "A handful of people against the world");
         Supplier carthage = new Supplier("Carthage", "Hear the mountains rumble");
-        Supplier deluun = new Supplier("Delüün Boldog", "The cradle of the Golden Horde");
+        Supplier deluun = new Supplier("Deluun Boldog", "The cradle of the Golden Horde");
         Supplier hazajarat = new Supplier("Hazajarat", "Birth of the Arrow");
         Supplier owari = new Supplier("Owari", "The start of something big");
         Supplier mikagawa = new Supplier("Mikagawa", "Union for all");
