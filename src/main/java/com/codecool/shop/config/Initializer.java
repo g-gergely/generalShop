@@ -28,20 +28,24 @@ public class Initializer implements ServletContextListener {
         Supplier arpino = new Supplier("Arpino", "The blood of Lazio");
         Supplier pella = new Supplier("Pella", "World tour from Pella coming to you soon");
         Supplier sparta = new Supplier("Sparta", "A handful of people against the world");
+        Supplier athens = new Supplier("Athens", "First-hand democracy");
         Supplier carthage = new Supplier("Carthage", "Hear the mountains rumble");
         Supplier deluun = new Supplier("Deluun Boldog", "The cradle of the Golden Horde");
         Supplier hazajarat = new Supplier("Hazajarat", "Birth of the Arrow");
         Supplier owari = new Supplier("Owari", "The start of something big");
         Supplier mikagawa = new Supplier("Mikagawa", "Union for all");
+        Supplier hiyoshi = new Supplier("Hiyoshi-maru", "Birth place of Toyotomi Hideyoshi");
         supplierDataStore.add(rome);
         supplierDataStore.add(arpino);
         supplierDataStore.add(pella);
         supplierDataStore.add(sparta);
+        supplierDataStore.add(athens);
         supplierDataStore.add(carthage);
         supplierDataStore.add(deluun);
         supplierDataStore.add(hazajarat);
         supplierDataStore.add(owari);
         supplierDataStore.add(mikagawa);
+        supplierDataStore.add(hiyoshi);
 
         //setting up a new product category
         ProductCategory roman = new ProductCategory("Roman", "General", "A roman genera always leads from the front.");
@@ -66,6 +70,14 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Jebe", 49.9f, "USD", "Jebe, the Arrow - one of the most prominent generals of the famous Genghis Khan.", mongolian, hazajarat));
         productDataStore.add(new Product("Oda Nobunaga", 49.9f, "USD", "The first of the 3 unifiers of Japan, lord of Owari.", japanese, owari));
         productDataStore.add(new Product("Tokugawa Ieyasu", 49.9f, "USD", "The third and final unifier of Japan, his shogunate lasted for centuries.", japanese, mikagawa));
+
+        productDataStore.add(new Product("Pompeius Magnus", 49.9f, "USD", "One of the most decorated and celebrated Roman general of his time. Defeated the pirates of the Mediterranean Sea, won the 3rd Mithridatic war and even defeated Julius Caesar on one occasion.", roman, rome));
+        productDataStore.add(new Product("Lucius Cornelius Sulla", 49.9f, "USD", "The first dictator or Rome. Took the city by force 2 times, defeated the revolving Roman allies in the Social War and was victorious over Mithridates not in one, but in two wars", roman, rome));
+        productDataStore.add(new Product("Miltiades", 49.9f, "USD", "The victorious general of Marathon, also known as a famous chariot racer in his youth.", greek, athens));
+        productDataStore.add(new Product("Toyotomi Hideyoshi", 49.9f, "USD", "The second great unifier of Japan. Rose from Nobunaga's sandal-bearer to the highest ranks of Japan through his military genius and tactical abilites", japanese, hiyoshi));
+        productDataStore.add(new Product("Mago Barca", 49.9f, "USD", "The youngest of the Carthagian lions - the sons of Hamilkar Barca. A famous general who led many troops to victory in Iberia against the Romans", roman, rome));
+        productDataStore.add(new Product("Ogodei Khan", 49.9f, "USD", "The third son of Genghis Khan and second Great Khan of the Mongol Empire, under his rule the Mongol Empire reached its farthest extent west and south", mongolian, deluun));
+        productDataStore.add(new Product("Publius Cornelius Scipio Africanus", 49.9f, "USD", "A Roman general and later consul who is often regarded as one of the greatest military commanders and strategists of all time", roman, rome));
 
     }
 }
