@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <body>
-    <div id="products" class="row" th:if="${products != null}" th:fragment="prod">
-        <!--/*@thymesVar id="products" type="com.codecool.shop.model.Product"*/-->
+    <div id="products" class="row" th:if="${products != null}" th:fragment="prods">
+        <!--/*@thymesVar id="products" type="java.util.List"*/-->
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod : ${products}">
             <div class="card">
                 <div class="img-container">

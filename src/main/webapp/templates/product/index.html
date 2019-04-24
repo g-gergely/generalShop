@@ -28,6 +28,7 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Chelsea+Market" rel="stylesheet">
 </head>
 
 <body>
@@ -41,18 +42,13 @@
 
     <div th:replace="product/search.html :: search"></div>
 
-
-    <div class="card">
-        <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
-        <div th:if="${categ}" th:text="|${categ.name} Generals|"></div>
-    </div>
     <div id="main-content">
         <div class="card" id="current-categ">
             <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
             <div id="current-categ-name" th:if="${categ}" th:text="|${categ.name} Generals|"></div>
         </div>
 
-        <div th:replace="product/products.html :: prod"></div>
+        <div th:replace="product/products.html :: prods"></div>
     </div>
 
     <div th:replace="footer.html :: foot"></div>
