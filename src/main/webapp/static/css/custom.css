@@ -141,7 +141,8 @@ img {
 
 #current-categ {
     text-align: center;
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
 }
 
 #current-categ-name {
@@ -210,4 +211,10 @@ span {
 
 #cart-back {
     margin: 10px;
+}
+
+#products {
+    background-color: rgba(255, 255, 255, 0.65);
+    width: 80%;
+    margin-left: 10%;
 }
