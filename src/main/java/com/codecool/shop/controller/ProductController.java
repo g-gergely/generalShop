@@ -91,7 +91,7 @@ public class ProductController extends HttpServlet {
             supplierObj= null;
             response.sendRedirect("/");
         } else {
-            List<Product> products = getProducts(category, supplier);
+            List<Product> products = productDataStore.getProducts(category, supplier);
             ProductCategory newCategory = products.stream()
                     .map(Product::getProductCategory)
                     .findFirst()
@@ -117,19 +117,5 @@ public class ProductController extends HttpServlet {
             params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
             engine.process("product/index", context, response.getWriter());
         }
-    }
-
-    private List<Product> getProducts(String category, String supplier) {
-        Stream<Product> productStream = productDataStore.getAll().stream();
-
-        if (!category.equals("")) {
-            productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
-        }
-
-        if (!supplier.equals("")) {
-            productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
-        }
-
-        return productStream.collect(Collectors.toList());
     }
 }
