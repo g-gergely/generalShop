@@ -151,8 +151,10 @@ img {
     margin-top: 3rem;
 }
 
-button {
-    border-radius: 7px;
+.filter {
+    padding: 4px !important;
+    font-size: 15px !important;
+    margin: 3px !important;
 }
 
 .card {
