@@ -50,8 +50,9 @@
             </thead>
             <tbody>
                 <tr th:each="general: ${cartMap}">
-                    <td style="width: 10%"><img class="cart-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${#strings.substringAfter(general.key, '?')} + '.jpg'" alt="" /></td>
-                    <td th:text="${#strings.substring(general.key, 0, #strings.indexOf(general.key, '?'))}" />
+
+                    <td style="width: 10%"><img class="cart-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${#strings.substring(general.key, 0, #strings.indexOf(general.key, '?'))} + '.jpg'" alt="" /></td>
+                    <td th:text="${#strings.substringAfter(general.key, '?')}" />
                     <td>
                         <form action="/cart">
                             <button class="btn btn-danger" type="submit" name="remove" th:value="${general.key}">-</button>
