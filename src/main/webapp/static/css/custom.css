@@ -110,7 +110,6 @@ h1 {
 
 #search-container {
     display: inline-block;
-    margin-left: 10%;
 }
 
 img {
@@ -122,7 +121,7 @@ img {
 
 .container {
     padding: 0;
-    margin-left: 5%;
+    margin-left: 12%;
 }
 
 .img-container {
