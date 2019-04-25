@@ -31,7 +31,7 @@
 </head>
 
 <body>
-    <div id="wrapper">
+    <div id="wrapper" class="centered">
         <div class="jumbotron text-center">
             <h1>Cart</h1>
         </div>
@@ -70,8 +70,9 @@
                         </td>
                         <td th:text="${#strings.substring(general.key, 0, #strings.indexOf(general.key, '!'))} * ${general.value} + ' USD'"></td>
                     </tr>
-                    <tr>
-                        <td th:text="'Full price: ' + ${cartValue}"></td>
+                    <tr class="bold-left">
+                        <td colspan="3">Total Price:</td>
+                        <td th:text="|${#numbers.formatDecimal(cartValue, 0, 2)} Talentum|"></td>
                     </tr>
                 </tbody>
             </table>
