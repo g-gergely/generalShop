@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
@@ -39,7 +40,10 @@ public class CartController extends HttpServlet {
             }
         }
 
+        double cartValue = cart.keySet().stream().mapToDouble(x -> Double.parseDouble(x.substring(0, x.indexOf("!"))) * (double) cart.get(x)).sum();
+
         context.setVariable("cartMap", cart);
+        context.setVariable("cartValue", cartValue);
         engine.process("product/cart", context, response.getWriter());
     }
 }
