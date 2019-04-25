@@ -92,6 +92,7 @@ h1 {
 
 #search-container {
     display: inline-block;
+    margin-left: 10%;
 }
 
 #main-content, #search-container {

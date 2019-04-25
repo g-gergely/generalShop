@@ -5,11 +5,12 @@
         <div id="search-container">
             <div>
                 <form action="/#" th:action="@{/}" method="post">
-                    <label class="search-label">Categories</label>
-                    <select name="category" id="category">
+
+                    <label class="search-label"></label>
+                    <select class="btn btn-light" name="category" id="category">
                         <!--/*@thymesVar id="category" type="com.codecool.shop.model.ProductCategory"*/-->
                         <!--/*@thymesVar id="categories" type="java.util.List"*/-->
-                        <option selected value> -- select an option --</option>
+                        <option selected value>Categories</option>
                         <!--/*@thymesVar id="selectedCateg" type="java.lang.String"*/-->
                         <option th:each="category: ${categories}" th:value="${category.name}"
                                 th:text="${category.name}"
@@ -17,14 +18,11 @@
                         </option>
                     </select>
 
-                    <label class="search-label">Supplier</label>
-                    <button type="submit" class="btn btn-info filter">
-                        <i class="fas fa-filter"></i> Filter
-                    </button>
-                    <select name="supplier" id="supplier">
+                    <label class="search-label"></label>
+                    <select class="btn btn-light" name="supplier" id="supplier">
                         <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
                         <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
-                        <option selected value> -- select an option --</option>
+                        <option selected value>Supplier</option>
                         <!--/*@thymesVar id="selectedSupplier" type="java.lang.String"*/-->
                         <!--/*@thymesVar id="name" type="java.lang.String"*/-->
                         <option th:each="supplier: ${suppliers}" th:value="${supplier.name}"
@@ -32,6 +30,10 @@
                                 th:selected="${selectedSupplier} == ${supplier.name}">
                         </option>
                     </select>
+
+                    <button type="submit" class="btn btn-info filter">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
                 </form>
             </div>
         </div>
