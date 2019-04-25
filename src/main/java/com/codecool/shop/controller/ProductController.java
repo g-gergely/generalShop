@@ -9,6 +9,7 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -32,6 +33,9 @@ public class ProductController extends HttpServlet {
     private String category = "";
     private String supplier = "";
 
+    private ProductCategory categoryObj= productCategoryDataStore.find(1);
+    private Supplier supplierObj= null;
+
     private static Map<String, Integer> cartMap = new HashMap<>();
 
     public static Map<String, Integer> getCartMap() {
@@ -46,10 +50,10 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(request, response, request.getServletContext());
 
         Map params = new HashMap<String, Object>() {{
-            put("categ", productCategoryDataStore.find(1));
+            put("categ", categoryObj);
             put("selectedCateg", category);
             put("selectedSupplier", supplier);
-            put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+            put("products", productDataStore.getBy(categoryObj));
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
         }};
@@ -82,6 +86,8 @@ public class ProductController extends HttpServlet {
         }};
 
         if (category.equals("") && supplier.equals("")) {
+            categoryObj= productCategoryDataStore.find(1);
+            supplierObj= null;
             response.sendRedirect("/");
         } else {
             List<Product> products = getProducts(category, supplier);
@@ -96,6 +102,16 @@ public class ProductController extends HttpServlet {
                 params.put("selectedCateg", newCategory.getName());
                 params.put("selectedSupplier", supplier);
             }
+
+            categoryObj = productCategoryDataStore.getAll().stream()
+                    .filter(categ -> categ.getName().equals(category))
+                    .findFirst()
+                    .orElse(null);
+
+            supplierObj = supplierDao.getAll().stream()
+                    .filter(supp -> supp.getName().equals(supplier))
+                    .findFirst()
+                    .orElse(null);
 
             params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
             engine.process("product/index", context, response.getWriter());

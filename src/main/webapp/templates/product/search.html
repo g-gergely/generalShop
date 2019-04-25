@@ -18,17 +18,20 @@
                     </select>
 
                     <label class="search-label">Supplier</label>
+                    <button type="submit" class="btn btn-info filter">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
                     <select name="supplier" id="supplier">
                         <!--/*@thymesVar id="suppliers" type="java.util.List"*/-->
                         <!--/*@thymesVar id="supplier" type="com.codecool.shop.model.Supplier"*/-->
                         <option selected value> -- select an option --</option>
                         <!--/*@thymesVar id="selectedSupplier" type="java.lang.String"*/-->
+                        <!--/*@thymesVar id="name" type="java.lang.String"*/-->
                         <option th:each="supplier: ${suppliers}" th:value="${supplier.name}"
                                 th:text="${supplier.name}"
                                 th:selected="${selectedSupplier} == ${supplier.name}">
                         </option>
                     </select>
-                    <button type="submit">Filter</button>
                 </form>
             </div>
         </div>

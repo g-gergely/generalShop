@@ -1,7 +1,10 @@
-html, body {
+* {
     margin: 0;
     padding: 0;
-    height: 80vw;
+}
+
+html, body {
+    height: 100%;
 }
 
 body {
@@ -9,7 +12,13 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+}
+
+#wrapper {
+    margin: 0 auto;
     position: relative;
+    padding-bottom: 6rem;
+    min-height: 100%;
 }
 
 .flex-row-reverse {
@@ -133,15 +142,19 @@ img {
 #footer {
     text-align: center;
     width: 100%;
+    color: #ffffff;
+    position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
-    position: absolute;
-    color: #ffffff;
+    padding: 1rem;
+    margin-top: 3rem;
 }
 
-button {
-    border-radius: 7px;
+.filter {
+    padding: 4px !important;
+    font-size: 15px !important;
+    margin: 3px !important;
 }
 
 .card {
@@ -155,7 +168,7 @@ button {
 }
 
 .card-description {
-    height: 180px;
+    height: 200px;
 }
 
 .card-title {

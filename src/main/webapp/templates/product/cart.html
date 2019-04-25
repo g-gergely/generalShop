@@ -31,41 +31,46 @@
 </head>
 
 <body>
-    <div class="jumbotron text-center">
-        <h1>Cart</h1>
+    <div id="wrapper">
+        <div class="jumbotron text-center">
+            <h1>Cart</h1>
+        </div>
+
+        <div id="cart-back">
+            <a class="btn btn-info" href="/">Back</a>
+        </div>
+
+        <div class="card-text" id="cart-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="general: ${cartMap}">
+                        <td style="width: 10%">
+                            <img class="cart-image" src="http://placehold.it/400x250/000/fff"
+                                 th:attr="src='/static/img/product_' + ${#strings.substringAfter(general.key, '?')} + '.jpg'"
+                                 alt=""/>
+                        </td>
+                        <td th:text="${#strings.substring(general.key, 0, #strings.indexOf(general.key, '?'))}"></td>
+                        <td>
+                            <form action="/cart">
+                                <button class="btn btn-danger" type="submit" name="remove" th:value="${general.key}">-
+                                </button>
+                                <span th:text="${general.value}"></span>
+                                <button class="btn btn-success" type="submit" name="add" th:value="${general.key}">+
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="footer.html :: foot"></div>
     </div>
-
-    <div id="cart-back">
-        <a class="btn btn-info" href="/">Back</a>
-    </div>
-
-    <div class="card-text" id="cart-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Photo</th>
-                    <th>Name</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="general: ${cartMap}">
-
-                    <td style="width: 10%"><img class="cart-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${#strings.substring(general.key, 0, #strings.indexOf(general.key, '?'))} + '.jpg'" alt="" /></td>
-                    <td th:text="${#strings.substringAfter(general.key, '?')}" />
-                    <td>
-                        <form action="/cart">
-                            <button class="btn btn-danger" type="submit" name="remove" th:value="${general.key}">-</button>
-                            <span th:text="${general.value}" />
-                            <button class="btn btn-success" type="submit" name="add" th:value="${general.key}">+</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div th:replace="footer.html :: foot"></div>
-
 </body>
 </html>
