@@ -59,6 +59,7 @@ public class ProductController extends HttpServlet {
         }};
 
         params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
+        response.setCharacterEncoding("UTF-8");
         engine.process("product/index", context, response.getWriter());
 
         String addId = request.getParameter("item_id");
@@ -115,6 +116,7 @@ public class ProductController extends HttpServlet {
                     .orElse(null);
 
             params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
+            response.setCharacterEncoding("UTF-8");
             engine.process("product/index", context, response.getWriter());
         }
     }

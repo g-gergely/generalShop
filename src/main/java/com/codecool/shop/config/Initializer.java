@@ -30,7 +30,7 @@ public class Initializer implements ServletContextListener {
         Supplier sparta = new Supplier("Sparta", "A handful of people against the world");
         Supplier athens = new Supplier("Athens", "First-hand democracy");
         Supplier carthage = new Supplier("Carthage", "Hear the mountains rumble");
-        Supplier deluun = new Supplier("Deluun Boldog", "The cradle of the Golden Horde");
+        Supplier deluun = new Supplier("Delüün Boldog", "The cradle of the Golden Horde");
         Supplier hazajarat = new Supplier("Hazajarat", "Birth of the Arrow");
         Supplier owari = new Supplier("Owari", "The start of something big");
         Supplier mikagawa = new Supplier("Mikagawa", "Union for all");
@@ -63,7 +63,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Julius Caesar", 4000, "TAL", "One of the greatest general of the world. Known for his victories over the Gallic tribes and as the main reason for the fall of the Roman Republic", roman, rome));
         productDataStore.add(new Product("Gaius Marius", 750, "TAL", "The seven time consul of Rome known for his military reforms and victories over the Numidians, the Cambri and Teutones.", roman, arpino));
         productDataStore.add(new Product("Alexander The Great", 4500, "TAL", "The greatest general of all time, conqueror of Persia, son of Philip II.", greek, pella));
-        productDataStore.add(new Product("Leonidas", 900, "TAL", "The famous Spartan general who held the Thermopulai against the persian masses.", greek, sparta));
+        productDataStore.add(new Product("Leonidas", 900, "TAL", "The famous Spartan general who held the Thermopülai against the persian masses.", greek, sparta));
         productDataStore.add(new Product("Hannibal Barca", 1700, "TAL", "The greatest Carthaginian general who crossed the Alps with his army to surprise the Roman on their own turf.", carthaginian, carthage));
         productDataStore.add(new Product("Hasdrubal Barca", 1200, "TAL", "Younger brother of the famous Hannibal, held the Roman armies for years at the Iberian peninsula.", carthaginian, carthage));
         productDataStore.add(new Product("Genghis Khan", 3500, "TAL", "Unifier and first Khan of the Mongols. His empire was one of the greatest in world history rivaled only by the British.", mongolian, deluun));
