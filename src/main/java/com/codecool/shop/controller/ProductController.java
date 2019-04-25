@@ -106,7 +106,6 @@ public class ProductController extends HttpServlet {
                 params.put("selectedCateg", newCategory.getName());
                 params.put("selectedSupplier", supplier);
                 category = products.get(0).getProductCategory().getName();
-                supplier = products.get(0).getSupplier().getName();
             }
 
             categoryObj = productCategoryDataStore.getAll().stream()
