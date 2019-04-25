@@ -73,4 +73,18 @@ public class ProductDaoMem implements ProductDao {
 
         return productStream.collect(Collectors.toList());
     }
+
+    @Override
+    public List<Product> getProducts(Supplier supplierObj, ProductCategory categoryObj) {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+            List<Product> products;
+            if (supplierObj != null) {
+                products = productDataStore.getBy(categoryObj).stream()
+                        .filter(pr -> pr.getSupplier() == supplierObj)
+                        .collect(Collectors.toList());
+            } else {
+                products = productDataStore.getBy(categoryObj);
+            }
+            return products;
+    }
 }

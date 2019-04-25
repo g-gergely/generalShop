@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -53,10 +51,13 @@ public class ProductController extends HttpServlet {
             put("categ", categoryObj);
             put("selectedCateg", category);
             put("selectedSupplier", supplier);
-            put("products", productDataStore.getBy(categoryObj));
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
         }};
+
+        List<Product> products = productDataStore.getProducts(supplierObj, categoryObj);
+        params.put("products", products);
+
 
         params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         response.setCharacterEncoding("UTF-8");
@@ -97,6 +98,7 @@ public class ProductController extends HttpServlet {
                     .map(Product::getProductCategory)
                     .findFirst()
                     .orElse(null);
+
 
             if (products.size() > 0) {
                 params.put("products", products);

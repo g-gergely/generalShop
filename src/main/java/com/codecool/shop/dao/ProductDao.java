@@ -1,13 +1,10 @@
 package com.codecool.shop.dao;
 
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public interface ProductDao {
 
@@ -20,4 +17,6 @@ public interface ProductDao {
     List<Product> getBy(ProductCategory productCategory);
 
     List<Product> getProducts(String category, String supplier);
+
+    List<Product> getProducts(Supplier supplier, ProductCategory category);
 }
