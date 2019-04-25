@@ -72,7 +72,7 @@
                     </tr>
                     <tr class="bold-left">
                         <td colspan="3">Total Price:</td>
-                        <td th:text="|${#numbers.formatDecimal(cartValue, 0, 2)} Talentum|"></td>
+                        <td th:text="${cartValue != 0 ? #numbers.formatDecimal(cartValue, 0, 2) + ' Talentum' : ''} "></td>
                     </tr>
                 </tbody>
             </table>
