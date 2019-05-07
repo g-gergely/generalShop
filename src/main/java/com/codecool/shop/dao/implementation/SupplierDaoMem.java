@@ -63,6 +63,22 @@ public class SupplierDaoMem implements SupplierDao {
         return supplier;
     }
 
+    public int findId(String name){
+        int id = 0;
+        String sql = "SELECT id FROM supplier WHERE name = ?;";
+        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
     @Override
     public void add(Supplier supplier) {
         String sql = "INSERT INTO supplier (name, description) VALUES (?,?);";
