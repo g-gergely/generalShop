@@ -27,18 +27,18 @@ public class SupplierDaoMem implements SupplierDao {
         return instance;
     }
 
-    private List<Supplier> executeQuery(String query){
+    private List<Supplier> executeQuery(String query) {
         List<Supplier> suppliers = new ArrayList<>();
-        try(Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)){
+        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Supplier supplier = new Supplier(
                         rs.getString("name"),
                         rs.getString("description"));
                 suppliers.add(supplier);
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return suppliers;
@@ -46,13 +46,13 @@ public class SupplierDaoMem implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-        String sql = "INSERT INTO supplier VALUES name = ?, description = ?;";
-        try(Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)){
+        String sql = "INSERT INTO supplier (name, description) VALUES (?,?);";
+        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, supplier.getName());
             statement.setString(2, supplier.getDescription());
             statement.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -61,16 +61,16 @@ public class SupplierDaoMem implements SupplierDao {
     public Supplier find(int id) {
         String sql = "SELECT * FROM supplier WHERE id=?;";
         Supplier supplier = null;
-        try(Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)){
+        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 supplier = new Supplier(
                         rs.getString("name"),
                         rs.getString("description"));
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -80,11 +80,11 @@ public class SupplierDaoMem implements SupplierDao {
     @Override
     public void remove(int id) {
         String sql = "DELETE FROM supplier WHERE id = ?;";
-        try(Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)){
+        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             statement.executeUpdate();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
