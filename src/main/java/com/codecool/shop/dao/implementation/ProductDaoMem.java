@@ -2,7 +2,6 @@ package com.codecool.shop.dao.implementation;
 
 
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -10,12 +9,9 @@ import com.codecool.shop.model.Supplier;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ProductDaoMem implements ProductDao {
 
-    private List<Product> data = new ArrayList<>();
     private static ProductDaoMem instance = null;
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/store";
