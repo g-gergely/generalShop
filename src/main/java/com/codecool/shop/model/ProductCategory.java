@@ -11,6 +11,7 @@ public class ProductCategory extends BaseModel {
         super(name);
         this.department = department;
         this.products = new ArrayList<>();
+        this.description = description;
     }
 
     public String getDepartment() {

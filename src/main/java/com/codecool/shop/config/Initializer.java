@@ -60,7 +60,7 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(japanese);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Julius Caesar", 4000, "TAL", "One of the greatest general of the world. Known for his victories over the Gallic tribes and as the main reason for the fall of the Roman Republic", roman, rome));
+        /*productDataStore.add(new Product("Julius Caesar", 4000, "TAL", "One of the greatest general of the world. Known for his victories over the Gallic tribes and as the main reason for the fall of the Roman Republic", roman, rome));
         productDataStore.add(new Product("Gaius Marius", 750, "TAL", "The seven time consul of Rome known for his military reforms and victories over the Numidians, the Cambri and Teutones.", roman, arpino));
         productDataStore.add(new Product("Alexander The Great", 4500, "TAL", "The greatest general of all time, conqueror of Persia, son of Philip II.", greek, pella));
         productDataStore.add(new Product("Leonidas", 900, "TAL", "The famous Spartan general who held the Thermopülai against the persian masses.", greek, sparta));
@@ -78,6 +78,6 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Mago Barca", 500, "TAL", "The youngest of the Carthagian lions - the sons of Hamilkar Barca. A famous general who led many troops to victory in Iberia against the Romans", carthaginian, carthage));
         productDataStore.add(new Product("Ogodei Khan", 3700, "TAL", "The third son of Genghis Khan and second Great Khan of the Mongol Empire, under his rule the Mongol Empire reached its farthest extent west and south", mongolian, deluun));
         productDataStore.add(new Product("Publius Cornelius Scipio Africanus", 1100, "TAL", "A Roman general and later consul who is often regarded as one of the greatest military commanders and strategists of all time", roman, rome));
-
+        */
     }
 }

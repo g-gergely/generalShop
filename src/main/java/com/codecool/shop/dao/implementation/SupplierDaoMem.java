@@ -46,7 +46,7 @@ public class SupplierDaoMem implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-        String sql = "INSERT INTO supplier VALUES name = ?, description = ?;";
+        String sql = "INSERT INTO supplier (name, description) VALUES (?, ?);";
         try(Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)){
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, supplier.getName());

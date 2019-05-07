@@ -74,7 +74,7 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
 
     @Override
     public void add(ProductCategory category) {
-        String sql = "INSERT INTO product_category VALUES name = ?, department = ?, description = ?;";
+        String sql = "INSERT INTO product_category (name, department, description) VALUES (?, ?, ?);";
         try(Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)){
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, category.getName());
