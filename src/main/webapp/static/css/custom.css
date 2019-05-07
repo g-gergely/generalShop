@@ -31,20 +31,77 @@ body {
 }
 
 .flex-row-reverse {
-    margin-right: 11%;
+    margin-right: 2%;
+}
+
+.glyphicon {
+    margin-right: 5px;
+}
+
+.thumbnail {
+    margin-bottom: 20px;
+    padding: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 .thumbnail img {
     margin-top: 10px;
 }
 
+.item.list-group-item {
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
+    background: #428bca;
+}
+
+.item.list-group-item .list-group-image {
+    margin-right: 10px;
+}
+
+.item.list-group-item .thumbnail {
+    margin-bottom: 0;
+}
+
+.item.list-group-item .caption {
+    padding: 9px 9px 0 9px;
+}
+
+.item.list-group-item:nth-of-type(odd) {
+    background: #eeeeee;
+}
+
+.item.list-group-item:before, .item.list-group-item:after {
+    display: table;
+    content: " ";
+}
+
 .item.list-group-item img {
     float: left;
+}
+
+.item.list-group-item:after {
+    clear: both;
+}
+
+.list-group-item-text {
+    margin: 0 0 11px;
 }
 
 h1 {
     font-family: 'Chelsea Market', cursive;
     font-size: 3em;
+}
+
+#search-container {
+    display: inline-block;
+    margin-left: 10%;
 }
 
 #main-content, #search-container {
@@ -57,7 +114,7 @@ h1 {
 }
 
 #search-container {
-    display: inline-block;
+    padding-left: 30px;
 }
 
 img {
@@ -69,7 +126,7 @@ img {
 
 .container {
     padding: 0;
-    margin-left: 12%;
+    margin: 0;
 }
 
 .img-container {
@@ -106,7 +163,7 @@ img {
 }
 
 .filter {
-    padding: 6px !important;
+    padding: 4px !important;
     font-size: 15px !important;
     margin: 3px !important;
 }
@@ -122,7 +179,7 @@ img {
 }
 
 .card-description {
-    height: 220px;
+    height: 200px;
 }
 
 .card-title {

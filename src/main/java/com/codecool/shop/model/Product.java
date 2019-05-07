@@ -1,6 +1,5 @@
 package com.codecool.shop.model;
 
-
 public class Product extends BaseModel {
 
     private float defaultPrice;
@@ -24,11 +23,19 @@ public class Product extends BaseModel {
         this.defaultPrice = defaultPrice;
     }
 
-    public String getPrice() {
-        return this.defaultPrice + " " + this.defaultCurrency;
+    public String getDefaultCurrency() {
+        return defaultCurrency;
     }
 
-    private void setPrice(float price, String currency) {
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
+    }
+
+    public String getPrice() {
+        return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
+    }
+
+    public void setPrice(float price, String currency) {
         this.defaultPrice = price;
         this.defaultCurrency = currency;
     }
@@ -37,7 +44,7 @@ public class Product extends BaseModel {
         return productCategory;
     }
 
-    private void setProductCategory(ProductCategory productCategory) {
+    public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
         this.productCategory.addProduct(this);
     }
@@ -46,7 +53,7 @@ public class Product extends BaseModel {
         return supplier;
     }
 
-    private void setSupplier(Supplier supplier) {
+    public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
         this.supplier.addProduct(this);
     }
@@ -62,7 +69,7 @@ public class Product extends BaseModel {
                 this.id,
                 this.name,
                 this.defaultPrice,
-                this.defaultCurrency,
+                this.defaultCurrency.toString(),
                 this.productCategory.getName(),
                 this.supplier.getName());
     }
