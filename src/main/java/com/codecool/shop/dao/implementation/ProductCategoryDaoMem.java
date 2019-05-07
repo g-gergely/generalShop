@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ProductCategoryDaoMem implements ProductCategoryDao {
 
-    private List<ProductCategory> data = new ArrayList<>();
     private static ProductCategoryDaoMem instance = null;
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/store";
@@ -43,7 +42,6 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
         } catch (SQLException e){
             e.printStackTrace();
         }
-
         return categories;
     }
 
@@ -62,9 +60,10 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
-                category = new ProductCategory
-                        (rs.getString("name"), rs.getString("department"),
-                                rs.getString("description"));
+                category = new ProductCategory(
+                        rs.getString("name"),
+                        rs.getString("department"),
+                        rs.getString("description"));
             }
         } catch (SQLException e){
             e.printStackTrace();
