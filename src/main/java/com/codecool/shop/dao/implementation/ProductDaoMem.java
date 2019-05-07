@@ -2,7 +2,6 @@ package com.codecool.shop.dao.implementation;
 
 
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -10,12 +9,9 @@ import com.codecool.shop.model.Supplier;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ProductDaoMem implements ProductDao {
 
-    private List<Product> data = new ArrayList<>();
     private static ProductDaoMem instance = null;
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/store";
@@ -58,15 +54,17 @@ public class ProductDaoMem implements ProductDao {
     @Override
     public void add(Product product) {
         String sql = "INSERT INTO product (name, default_price, currency, description, supplier, product_category) " +
-                    "VALUES (?,?,?,?,?,?);";
+                    "VALUES (?,?,?,?,?, ?);";
         try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, product.getName());
             statement.setFloat(2, product.getDefaultPrice());
             statement.setString(3, product.getDefaultCurrency());
             statement.setString(4, product.getDescription());
-            statement.setInt(5, product.getSupplier().getId());
-            statement.setInt(6, product.getProductCategory().getId());
+            statement.setInt(5, SupplierDaoMem.getInstance()
+                    .findId(product.getSupplier().getName()));
+            statement.setInt(6, ProductCategoryDaoMem.getInstance()
+                    .findId(product.getProductCategory().getName()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,17 +129,11 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public List<Product> getProducts(String category, String supplier) {
-        Stream<Product> productStream = instance.getAll().stream();
-
-        if (!category.equals("")) {
-            productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
-        }
-
-        if (!supplier.equals("")) {
-            productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
-        }
-
-        return productStream.collect(Collectors.toList());
+        int supplierId = ProductCategoryDaoMem.getInstance().find(supplier).getId();
+        int categoryId = ProductCategoryDaoMem.getInstance().find(category).getId();
+        String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
+                " AND product_category = " + categoryId +";";
+        return executeQuery(sql);
     }
 
     @Override
