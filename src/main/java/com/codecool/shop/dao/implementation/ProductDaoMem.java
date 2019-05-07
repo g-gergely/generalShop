@@ -131,17 +131,11 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public List<Product> getProducts(String category, String supplier) {
-        Stream<Product> productStream = instance.getAll().stream();
-
-        if (!category.equals("")) {
-            productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
-        }
-
-        if (!supplier.equals("")) {
-            productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
-        }
-
-        return productStream.collect(Collectors.toList());
+        int supplierId = ProductCategoryDaoMem.getInstance().find(supplier).getId();
+        int categoryId = ProductCategoryDaoMem.getInstance().find(category).getId();
+        String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
+                " AND product_category = " + categoryId +";";
+        return executeQuery(sql);
     }
 
     @Override

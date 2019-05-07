@@ -45,6 +45,26 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
         return categories;
     }
 
+    public ProductCategory find(String name) {
+        String sql = "SELECT * FROM product_category WHERE name=?;";
+        ProductCategory category = null;
+        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                category = new ProductCategory(
+                        rs.getString("name"),
+                        rs.getString("department"),
+                        rs.getString("description"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return category;
+    }
+
     @Override
     public List<ProductCategory> getAll() {
         String sql = "SELECT * FROM product_category;";
