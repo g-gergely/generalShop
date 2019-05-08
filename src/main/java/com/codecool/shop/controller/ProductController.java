@@ -3,10 +3,10 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoDb;
+import com.codecool.shop.dao.implementation.ProductDaoDb;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoDb;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -25,9 +25,9 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    private SupplierDao supplierDao = SupplierDaoMem.getInstance();
+    private ProductDao productDataStore = ProductDaoDb.getInstance();
+    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoDb.getInstance();
+    private SupplierDao supplierDao = SupplierDaoDb.getInstance();
     private String category = "";
     private String supplier = "";
 
