@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
@@ -47,7 +47,7 @@ public class CartController extends HttpServlet {
 
         String url = (String) request.getSession().getAttribute("url");
 
-        context.setVariable("cartMap", cart != null ? cart.getCart(productDataStore) : new HashMap<>());
+        context.setVariable("cartMap", cart != null ? cart.getCart(productDataStore) : new TreeMap<>());
         context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
         context.setVariable("previousURL", url == null ? "/" : url);
         engine.process("product/cart", context, response.getWriter());

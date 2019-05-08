@@ -3,15 +3,15 @@ package com.codecool.shop.model.order;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class ShoppingCart {
-    private Map<Integer, Integer> cart = new HashMap<>();
+    private SortedMap<Integer, Integer> cart = new TreeMap<Integer, Integer>() {};
     private float totalPrice;
 
-    public Map<Product, Integer> getCart(ProductDao productDataStore) {
-        Map<Product, Integer> goodCart = new HashMap<>();
+    public SortedMap<Product, Integer> getCart(ProductDao productDataStore) {
+        SortedMap<Product, Integer> goodCart = new TreeMap<>();
 
         for (Integer prodId : cart.keySet()) {
             goodCart.put(productDataStore.find(prodId), cart.get(prodId));
