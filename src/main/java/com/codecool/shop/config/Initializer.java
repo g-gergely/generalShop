@@ -123,6 +123,8 @@ public class Initializer implements ServletContextListener {
         productDataStoreMem.add(new Product(16, "Ogodei Khan", 3700, "TAL", "The third son of Genghis Khan and second Great Khan of the Mongol Empire, under his rule the Mongol Empire reached its farthest extent west and south", mongolian, deluun));
         productDataStoreMem.add(new Product(17, "Publius Cornelius Scipio Africanus", 1100, "TAL", "A Roman general and later consul who is often regarded as one of the greatest military commanders and strategists of all time", roman, rome));
     }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {}
 }
 
-// Ids added to products (otherwise they don't have any).
