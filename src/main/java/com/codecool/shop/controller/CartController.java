@@ -28,6 +28,17 @@ public class CartController extends HttpServlet {
         String addId = request.getParameter("add");
         String removeId = request.getParameter("remove");
 
+        ShoppingCart cart = getShoppingCart(request, addId, removeId);
+
+        String url = (String) request.getSession().getAttribute("url");
+
+        context.setVariable("cartMap", cart != null ? cart.getCart(productDataStore) : new TreeMap<>());
+        context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
+        context.setVariable("previousURL", url == null ? "/" : url);
+        engine.process("product/cart", context, response.getWriter());
+    }
+
+    private ShoppingCart getShoppingCart(HttpServletRequest request, String addId, String removeId) {
         Order order = (Order) request.getSession().getAttribute("order");
         ShoppingCart cart = null;
 
@@ -45,11 +56,6 @@ public class CartController extends HttpServlet {
             cart.removeProduct(Integer.parseInt(removeId));
         }
 
-        String url = (String) request.getSession().getAttribute("url");
-
-        context.setVariable("cartMap", cart != null ? cart.getCart(productDataStore) : new TreeMap<>());
-        context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
-        context.setVariable("previousURL", url == null ? "/" : url);
-        engine.process("product/cart", context, response.getWriter());
+        return cart;
     }
 }
