@@ -22,7 +22,7 @@ class ProductCategoryDaoTest {
                 ProductCategoryDaoDb.getInstance());
     }
 
-    @BeforeEach
+    @BeforeAll
     private void init(){
         test = new ProductCategory(400, "Roman3", "Lieutenant", "Let's go");
     }
