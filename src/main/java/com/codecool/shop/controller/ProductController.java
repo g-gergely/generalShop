@@ -32,6 +32,7 @@ public class ProductController extends HttpServlet {
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoDb.getInstance();
     private SupplierDao supplierDao = SupplierDaoDb.getInstance();
     private final ProductCategory defaultCategory = productCategoryDataStore.find(1);
+    private Map<String, Object> params = new HashMap<>();
 
     private static Map<String, Integer> cartMap = new HashMap<>();
     public static Map<String, Integer> getCartMap() {
@@ -45,30 +46,14 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-        HttpSession session = request.getSession();
-        if (session.isNew()) {
-            session.setAttribute("categ", defaultCategory);
-            session.setAttribute("selectedCateg", defaultCategory.getName());
-            session.setAttribute("selectedSupplier", "");
-        }
-
-        Map<String, Object> params = new HashMap<String, Object>() {{
-            put("categ", session.getAttribute("categ"));
-            put("selectedCateg", session.getAttribute("selectedCateg"));
-            put("selectedSupplier", session.getAttribute("selectedSupplier"));
-            put("suppliers", supplierDao.getAll());
-            put("categories", productCategoryDataStore.getAll());
-        }};
-
-        //List<Product> products = productDataStore.getProducts(supplierObj, categoryObj);
-        List<Product> products = selectProducts(request, session);
+        List<Product> products = selectProducts(request);
         params.put("products", products);
-
 
         params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         response.setCharacterEncoding("UTF-8");
         engine.process("product/index", context, response.getWriter());
 
+        HttpSession session = request.getSession();
         String addId = request.getParameter("item_id");
 
         if (addId != null) {
@@ -79,12 +64,12 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    private List<Product> selectProducts(HttpServletRequest request, HttpSession session) {
+    private List<Product> selectProducts(HttpServletRequest request) {
         List<Product> products;
 
         String categoryName = request.getParameter("category");
         ProductCategory category = productCategoryDataStore.find(categoryName);
-        String supplierName = request.getParameter("suppler");
+        String supplierName = request.getParameter("supplier");
         Supplier supplier =supplierDao.find(supplierName);
 
         if (category == null && supplier == null) {
@@ -102,64 +87,12 @@ public class ProductController extends HttpServlet {
             products = productDataStore.getProducts(categoryName, supplierName);
         }
 
-        session.setAttribute("categ", category);
-        session.setAttribute("selectedCateg", categoryName);
-        session.setAttribute("selectedSupplier", supplierName);
+        params.put("categ", category);
+        params.put("selectedCateg", categoryName);
+        params.put("selectedSupplier", supplierName);
+        params.put("suppliers", supplierDao.getAll());
+        params.put("categories", productCategoryDataStore.getAll());
 
         return products;
     }
-
-   /* @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, response, request.getServletContext());
-
-        category = request.getParameter("category");
-        supplier = request.getParameter("supplier");
-
-        Map<String, Object> params = new HashMap<String, Object>() {{
-            put("suppliers", supplierDao.getAll());
-            put("categories", productCategoryDataStore.getAll());
-        }};
-
-        if (category.equals("") && supplier.equals("")) {
-            categoryObj= productCategoryDataStore.find(1);
-            supplierObj= null;
-            response.sendRedirect("/");
-        } else {
-            List<Product> products = productDataStore.getProducts(category, supplier);
-            ProductCategory newCategory = products.stream()
-                    .map(Product::getProductCategory)
-                    .findFirst()
-                    .orElse(null);
-
-
-            if (products.size() > 0) {
-                params.put("products", products);
-                params.put("categ", newCategory);
-                params.put("selectedCateg", newCategory.getName());
-                params.put("selectedSupplier", supplier);
-                category = products.get(0).getProductCategory().getName();
-            }
-
-            categoryObj = productCategoryDataStore.getAll().stream()
-                    .filter(categ -> categ.getName().equals(category))
-                    .findFirst()
-                    .orElse(null);
-
-            supplierObj = supplierDao.getAll().stream()
-                    .filter(supp -> supp.getName().equals(supplier))
-                    .findFirst()
-                    .orElse(null);
-
-            params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
-            response.setCharacterEncoding("UTF-8");
-            engine.process("product/index", context, response.getWriter());
-        }
-    }*/
 }
-
-//SupplierObj can't be null -> otherwise server error.
-// Types given to map.
