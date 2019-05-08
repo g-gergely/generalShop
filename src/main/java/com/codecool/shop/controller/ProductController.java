@@ -45,6 +45,7 @@ public class ProductController extends HttpServlet {
         Map<String, Object> parameters = getServletParameters(categoryName, supplierName, products);
 
         String addId = request.getParameter("item_id");
+
         if (addId != null) {
             addToCart(request);
         }
@@ -52,13 +53,6 @@ public class ProductController extends HttpServlet {
         parameters.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         response.setCharacterEncoding("UTF-8");
         engine.process("product/index", context, response.getWriter());
-
-        /*if (addId != null) {
-            Product chosen = productDataStore.find(Integer.parseInt(addId));
-            String identifier = chosen.getDefaultPrice() + "!" + addId + "?" + chosen.getName();
-            int amount = cartMap.get(identifier) != null ? cartMap.get(identifier) + 1 : 1;
-            cartMap.put(identifier, amount);
-        }*/
     }
 
     private void addToCart(HttpServletRequest request) {
@@ -71,8 +65,7 @@ public class ProductController extends HttpServlet {
         }
         String addId = request.getParameter("item_id");
         if (addId != null) {
-            Product chosenProduct = productDataStore.find(Integer.parseInt(addId));
-            order.getShoppingCart().addProduct(chosenProduct);
+            order.getShoppingCart().addProduct(Integer.parseInt(addId));
         }
         session.setAttribute("order", order);
     }
