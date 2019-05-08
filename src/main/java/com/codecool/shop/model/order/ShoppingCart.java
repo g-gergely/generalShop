@@ -18,15 +18,15 @@ public class ShoppingCart {
         return goodCart;
     }
 
-    public void addProduct(int product) {
-        cart.merge(product, 1, Integer::sum);
+    public void addProduct(int productId) {
+        cart.merge(productId, 1, Integer::sum);
     }
 
-    public void removeProduct(int product) {
-        if (cart.get(product) > 1) {
-            cart.merge(product, -1, Integer::sum);
+    public void removeProduct(int productId) {
+        if (cart.get(productId) > 1) {
+            cart.merge(productId, -1, Integer::sum);
         } else {
-            cart.remove(product);
+            cart.remove(productId);
         }
     }
 

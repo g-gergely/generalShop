@@ -25,10 +25,7 @@ public class CartController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-        String addId = request.getParameter("add");
-        String removeId = request.getParameter("remove");
-
-        ShoppingCart cart = getShoppingCart(request, addId, removeId);
+        ShoppingCart cart = modifyShoppingCartContent(request);
 
         String url = (String) request.getSession().getAttribute("url");
 
@@ -38,7 +35,10 @@ public class CartController extends HttpServlet {
         engine.process("product/cart", context, response.getWriter());
     }
 
-    private ShoppingCart getShoppingCart(HttpServletRequest request, String addId, String removeId) {
+    private ShoppingCart modifyShoppingCartContent(HttpServletRequest request) {
+        String addId = request.getParameter("add");
+        String removeId = request.getParameter("remove");
+
         Order order = (Order) request.getSession().getAttribute("order");
         ShoppingCart cart = null;
 
