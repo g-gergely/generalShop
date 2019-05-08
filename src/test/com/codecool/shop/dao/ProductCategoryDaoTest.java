@@ -45,7 +45,7 @@ class ProductCategoryDaoTest {
 
     @ParameterizedTest
     @MethodSource("getClasses")
-    public void testGetAll(ProductCategoryDao category){ ;
+    public void testGetAll(ProductCategoryDao category){
         assertEquals(2, category.getAll().size());
     }
 
