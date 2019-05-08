@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
@@ -28,20 +29,26 @@ public class CartController extends HttpServlet {
         String removeId = request.getParameter("remove");
 
         Order order = (Order) request.getSession().getAttribute("order");
-        ShoppingCart cart = order.getShoppingCart();
+        ShoppingCart cart = null;
+
+        if (order != null) {
+            cart = order.getShoppingCart();
+        }
 
         if (addId != null) {
+            assert cart != null;
             cart.addProduct(Integer.parseInt(addId));
         }
 
         if (removeId != null) {
+            assert cart != null;
             cart.removeProduct(Integer.parseInt(removeId));
         }
 
         String url = (String) request.getSession().getAttribute("url");
 
-        context.setVariable("cartMap", cart.getCart(productDataStore));
-        context.setVariable("cartValue", cart.getTotalPrice(productDataStore));
+        context.setVariable("cartMap", cart != null ? cart.getCart(productDataStore) : new HashMap<>());
+        context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
         context.setVariable("previousURL", url == null ? "/" : url);
         engine.process("product/cart", context, response.getWriter());
     }

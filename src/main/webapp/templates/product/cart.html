@@ -53,10 +53,13 @@
                 <tbody>
                     <tr th:each="general: ${cartMap.keySet()}">
                         <td style="width: 10%">
+                            <!--/*@thymesVar id="general" type="com.codecool.shop.model.Product"*/-->
                             <img class="cart-image" src="http://placehold.it/400x250/000/fff"
                                  th:attr="src='/static/img/product_' + ${general.id} + '.jpg'"
                                  alt=""/>
                         </td>
+                        <!--/*@thymesVar id="general" type="com.codecool.shop.model.Product"*/-->
+                        <!--/*@thymesVar id="name" type="java.lang.String"*/-->
                         <td th:text="${general.name}"></td>
                         <td>
                             <form action="/cart">
@@ -71,7 +74,7 @@
                     </tr>
                     <tr class="bold-left">
                         <td colspan="3">Total Price:</td>
-                        <td th:text="${cartValue != 0 ? #numbers.formatDecimal(cartValue, 0, 2) + ' Talentum' : ''} "></td>
+                        <td th:text="${cartValue} "></td>
                     </tr>
                 </tbody>
             </table>
