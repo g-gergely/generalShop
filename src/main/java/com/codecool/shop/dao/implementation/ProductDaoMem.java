@@ -6,7 +6,9 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -75,16 +77,12 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
-    public List<Product> getProducts(Supplier supplierObj, ProductCategory categoryObj) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        List<Product> products;
-        if (supplierObj != null) {
-            products = productDataStore.getBy(categoryObj).stream()
-                    .filter(pr -> pr.getSupplier() == supplierObj)
-                    .collect(Collectors.toList());
-        } else {
-            products = productDataStore.getBy(categoryObj);
-        }
-        return products;
+    public List<Product> selectProducts(String categoryName, String supplierName, HttpSession session) {
+        return null;
+    }
+
+    @Override
+    public HashMap<String, Object> getServletParameters(String categoryName, String supplierName, List<Product> products) {
+        return null;
     }
 }
