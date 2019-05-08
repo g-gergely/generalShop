@@ -34,6 +34,7 @@ public class SupplierDaoMem implements SupplierDao {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Supplier supplier = new Supplier(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("description"));
                 suppliers.add(supplier);
@@ -53,6 +54,7 @@ public class SupplierDaoMem implements SupplierDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 supplier = new Supplier(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("description"));
             }
@@ -63,29 +65,14 @@ public class SupplierDaoMem implements SupplierDao {
         return supplier;
     }
 
-    public int findId(String name){
-        int id = 0;
-        String sql = "SELECT id FROM supplier WHERE name = ?;";
-        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, name);
-            ResultSet rs = statement.executeQuery();
-            if(rs.next()){
-                id = rs.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
-
     @Override
     public void add(Supplier supplier) {
-        String sql = "INSERT INTO supplier (name, description) VALUES (?,?);";
+        String sql = "INSERT INTO supplier (id, name, description) VALUES (?,?,?);";
         try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, supplier.getName());
-            statement.setString(2, supplier.getDescription());
+            statement.setInt(1, supplier.getId());
+            statement.setString(2, supplier.getName());
+            statement.setString(3, supplier.getDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,6 +89,7 @@ public class SupplierDaoMem implements SupplierDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 supplier = new Supplier(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("description"));
             }

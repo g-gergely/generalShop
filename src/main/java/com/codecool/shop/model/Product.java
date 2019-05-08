@@ -8,8 +8,9 @@ public class Product extends BaseModel {
     private Supplier supplier;
 
 
-    public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+    public Product(int id, String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
         super(name, description);
+        this.id = id;
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
@@ -74,3 +75,4 @@ public class Product extends BaseModel {
                 this.supplier.getName());
     }
 }
+// Constructor changed to have id.

@@ -34,9 +34,11 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                ProductCategory category = new ProductCategory
-                        (rs.getString("name"), rs.getString("department"),
-                                rs.getString("description"));
+                ProductCategory category = new ProductCategory(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("department"),
+                        rs.getString("description"));
                 categories.add(category);
             }
         } catch (SQLException e) {
@@ -54,6 +56,7 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 category = new ProductCategory(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("department"),
                         rs.getString("description"));
@@ -65,21 +68,6 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
         return category;
     }
 
-    public int findId(String name){
-        int id = 0;
-        String sql = "SELECT id FROM product_category WHERE name = ?;";
-        try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, name);
-            ResultSet rs = statement.executeQuery();
-            if(rs.next()){
-                id = rs.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
 
     @Override
     public List<ProductCategory> getAll() {
@@ -97,6 +85,7 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 category = new ProductCategory(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("department"),
                         rs.getString("description"));
@@ -110,12 +99,13 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
 
     @Override
     public void add(ProductCategory category) {
-        String sql = "INSERT INTO product_category (name, department, description) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO product_category (id, name, department, description) VALUES (?, ?, ?, ?);";
         try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, category.getName());
-            statement.setString(2, category.getDepartment());
-            statement.setString(3, category.getDescription());
+            statement.setInt(1, category.getId());
+            statement.setString(2, category.getName());
+            statement.setString(3, category.getDepartment());
+            statement.setString(4, category.getDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

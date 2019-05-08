@@ -32,7 +32,7 @@ public class ProductController extends HttpServlet {
     private String supplier = "";
 
     private ProductCategory categoryObj= productCategoryDataStore.find(1);
-    private Supplier supplierObj= null;
+    private Supplier supplierObj= supplierDao.find(1);
 
     private static Map<String, Integer> cartMap = new HashMap<>();
 
@@ -47,7 +47,7 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-        Map params = new HashMap<String, Object>() {{
+        Map<String, Object> params = new HashMap<String, Object>() {{
             put("categ", categoryObj);
             put("selectedCateg", category);
             put("selectedSupplier", supplier);
@@ -83,7 +83,7 @@ public class ProductController extends HttpServlet {
         category = request.getParameter("category");
         supplier = request.getParameter("supplier");
 
-        Map params = new HashMap<String, Object>() {{
+        Map<String, Object> params = new HashMap<String, Object>() {{
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
         }};
@@ -124,3 +124,6 @@ public class ProductController extends HttpServlet {
         }
     }
 }
+
+//SupplierObj can't be null -> otherwise server error.
+// Types given to map.

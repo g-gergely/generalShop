@@ -37,6 +37,7 @@ public class ProductDaoMem implements ProductDao {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Product product = new Product(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getFloat("default_price"),
                         rs.getString("currency"),
@@ -53,18 +54,19 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public void add(Product product) {
-        String sql = "INSERT INTO product (name, default_price, currency, description, supplier, product_category) " +
-                    "VALUES (?,?,?,?,?, ?);";
+        String sql = "INSERT INTO product (id, name, default_price, currency, description, supplier, product_category) " +
+                    "VALUES (?,?,?,?,?,?,?);";
         try (Connection connection = DriverManager.getConnection(DATABASE, DBUSER, DBPASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, product.getName());
-            statement.setFloat(2, product.getDefaultPrice());
-            statement.setString(3, product.getDefaultCurrency());
-            statement.setString(4, product.getDescription());
-            statement.setInt(5, SupplierDaoMem.getInstance()
-                    .findId(product.getSupplier().getName()));
-            statement.setInt(6, ProductCategoryDaoMem.getInstance()
-                    .findId(product.getProductCategory().getName()));
+            statement.setInt(1, product.getId());
+            statement.setString(2, product.getName());
+            statement.setFloat(3, product.getDefaultPrice());
+            statement.setString(4, product.getDefaultCurrency());
+            statement.setString(5, product.getDescription());
+            statement.setInt(6, SupplierDaoMem.getInstance()
+                    .find(product.getSupplier().getName()).getId());
+            statement.setInt(7, ProductCategoryDaoMem.getInstance()
+                    .find(product.getProductCategory().getName()).getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,6 +83,7 @@ public class ProductDaoMem implements ProductDao {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 product = new Product(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getFloat("default_price"),
                         rs.getString("currency"),
@@ -129,7 +132,7 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public List<Product> getProducts(String category, String supplier) {
-        int supplierId = ProductCategoryDaoMem.getInstance().find(supplier).getId();
+        int supplierId = SupplierDaoMem.getInstance().find(supplier).getId();
         int categoryId = ProductCategoryDaoMem.getInstance().find(category).getId();
         String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
                 " AND product_category = " + categoryId +";";
@@ -138,10 +141,13 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public List<Product> getProducts(Supplier supplierObj, ProductCategory categoryObj) {
-        int supplierId = supplierObj.getId();
-        int categoryId = categoryObj.getId();
+        int supplierId = SupplierDaoMem.getInstance().find(supplierObj.getName()).getId();
+        int categoryId = ProductCategoryDaoMem.getInstance().find(categoryObj.getName()).getId();
         String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
                 " AND product_category = " + categoryId +";";
         return executeQuery(sql);
     }
 }
+
+//getProducts methods fixed: they find the filtered products by the foreign keys.
+// when new Product is instantiated, id is added 8from database)
