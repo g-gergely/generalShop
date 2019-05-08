@@ -9,13 +9,8 @@ import java.util.TreeMap;
 public class ShoppingCart {
     private SortedMap<Integer, Integer> cart = new TreeMap<Integer, Integer>() {};
 
-    public SortedMap<Product, Integer> getCart(ProductDao productDataStore) {
-        SortedMap<Product, Integer> goodCart = new TreeMap<>();
-
-        for (Integer prodId : cart.keySet()) {
-            goodCart.put(productDataStore.find(prodId), cart.get(prodId));
-        }
-        return goodCart;
+    public SortedMap<Integer, Integer> getCart() {
+        return cart;
     }
 
     public void addProduct(int productId) {

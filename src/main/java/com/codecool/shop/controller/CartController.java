@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductDaoDb;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.order.Order;
 import com.codecool.shop.model.order.ShoppingCart;
 import org.thymeleaf.TemplateEngine;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 @WebServlet(urlPatterns = {"/cart"})
@@ -27,9 +29,11 @@ public class CartController extends HttpServlet {
 
         ShoppingCart cart = modifyShoppingCartContent(request);
 
+        SortedMap<Product, Integer> cartContent = getShoppingCartWithObjectKeys(cart);
+
         String url = (String) request.getSession().getAttribute("url");
 
-        context.setVariable("cartMap", cart != null ? cart.getCart(productDataStore) : new TreeMap<>());
+        context.setVariable("cartMap", cart != null ? cartContent : new TreeMap<>());
         context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
         context.setVariable("previousURL", url == null ? "/" : url);
         engine.process("product/cart", context, response.getWriter());
@@ -44,18 +48,25 @@ public class CartController extends HttpServlet {
 
         if (order != null) {
             cart = order.getShoppingCart();
-        }
 
-        if (addId != null) {
-            assert cart != null;
-            cart.addProduct(Integer.parseInt(addId));
+            if (addId != null) {
+                cart.addProduct(Integer.parseInt(addId));
+            }
+            if (removeId != null) {
+                cart.removeProduct(Integer.parseInt(removeId));
+            }
         }
-
-        if (removeId != null) {
-            assert cart != null;
-            cart.removeProduct(Integer.parseInt(removeId));
-        }
-
         return cart;
     }
+
+    private SortedMap<Product, Integer> getShoppingCartWithObjectKeys(ShoppingCart cart) {
+        SortedMap<Product, Integer> cartContent = new TreeMap<>();
+        if (cart != null) {
+            for (Integer prodId : cart.getCart().keySet()) {
+                cartContent.put(productDataStore.find(prodId), cart.getCart().get(prodId));
+            }
+        }
+        return cartContent;
+    }
+
 }
