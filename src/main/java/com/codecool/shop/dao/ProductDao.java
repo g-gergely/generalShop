@@ -4,8 +4,6 @@ import com.codecool.shop.model.Supplier;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 
 public interface ProductDao {
@@ -19,8 +17,4 @@ public interface ProductDao {
     List<Product> getBy(ProductCategory productCategory);
 
     List<Product> getProducts(String category, String supplier);
-
-    List<Product> selectProducts(String categoryName, String supplierName, HttpSession session);
-
-    HashMap<String, Object> getServletParameters(String categoryName, String supplierName, List<Product> products);
 }

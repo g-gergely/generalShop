@@ -8,7 +8,6 @@ import java.util.TreeMap;
 
 public class ShoppingCart {
     private SortedMap<Integer, Integer> cart = new TreeMap<Integer, Integer>() {};
-    private float totalPrice;
 
     public SortedMap<Product, Integer> getCart(ProductDao productDataStore) {
         SortedMap<Product, Integer> goodCart = new TreeMap<>();
@@ -32,7 +31,7 @@ public class ShoppingCart {
     }
 
     public float getTotalPrice(ProductDao productDataStore) {
-        totalPrice = 0;
+        float totalPrice = 0;
         for (Integer productId: cart.keySet()) {
             totalPrice += productDataStore.find(productId).getDefaultPrice() * cart.get(productId);
         }

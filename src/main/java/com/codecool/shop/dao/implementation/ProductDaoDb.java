@@ -1,30 +1,21 @@
 package com.codecool.shop.dao.implementation;
 
 
-import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
-import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ProductDaoDb implements ProductDao {
 
-    private static ProductDaoDb instance = null;
-
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/store";
     private static final String DBUSER = System.getenv("USER");
     private static final String DBPASSWORD = System.getenv("PASSWORD");
-
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoDb.getInstance();
-    private SupplierDao supplierDao = SupplierDaoDb.getInstance();
-    private final ProductCategory defaultCategory = productCategoryDataStore.find(1);
+    private static ProductDaoDb instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -145,60 +136,6 @@ public class ProductDaoDb implements ProductDao {
         String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
                 " AND product_category = " + categoryId +";";
         return executeQuery(sql);
-    }
-
-    @Override
-    public List<Product> selectProducts(String categoryName, String supplierName, HttpSession session) {
-        List<Product> products;
-
-        ProductCategory category = productCategoryDataStore.find(categoryName);
-        Supplier supplier = supplierDao.find(supplierName);
-
-        if (category == null && supplier == null) {
-            products = this.getBy(defaultCategory);
-        } else if (category == null) {
-            products = this.getBy(supplier);
-        } else if (supplier == null) {
-            products = this.getBy(category);
-        } else {
-            products = this.getProducts(categoryName, supplierName);
-        }
-        if (categoryName != null || supplierName != null) {
-            session.setAttribute("url", (String.format("/?category=%s&supplier=%s", categoryName, supplierName)));
-        }
-
-        return products;
-    }
-
-    @Override
-    public HashMap<String, Object> getServletParameters(String categoryName, String supplierName, List<Product> products) {
-        HashMap<String, Object> parameters = new HashMap<>();
-
-        ProductCategory category = productCategoryDataStore.find(categoryName);
-        Supplier supplier = supplierDao.find(supplierName);
-
-        if (category == null && supplier == null) {
-            parameters.put("filter", String.format("%s Generals", defaultCategory.getName()));
-        } else if (category == null) {
-            parameters.put("filter", String.format("Generals from %s", supplier.getName()));
-        } else if (supplier == null) {
-            parameters.put("filter", String.format("%s Generals", category.getName()));
-        } else {
-            parameters.put("filter", String.format("%s Generals from %s", category.getName(), supplier.getName()));
-        }
-
-        parameters.put("products", products);
-
-        if (products.size() == 0) {
-            parameters.put("filter", "No results found.");
-        }
-
-        parameters.put("selectedCateg", categoryName);
-        parameters.put("selectedSupplier", supplierName);
-        parameters.put("suppliers", supplierDao.getAll());
-        parameters.put("categories", productCategoryDataStore.getAll());
-
-        return parameters;
     }
 }
 
