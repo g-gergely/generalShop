@@ -31,12 +31,13 @@ class ProductCategoryDaoTest {
     @MethodSource("getClasses")
     public void testAdd(ProductCategoryDao category){
         category.add(test);
-        assertEquals(category.find(400), test);
+        assertEquals(test, category.find(400));
     }
 
     @ParameterizedTest
     @MethodSource("getClasses")
     public void testRemove(ProductCategoryDao category){
-        category.remove(100);
+        category.remove(400);
+        assertNull(category.find(400));
     }
 }
