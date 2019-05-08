@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DaoTest {
 
@@ -38,54 +39,62 @@ class DaoTest {
         testSupplier = new Supplier(500, "RomanSupplier", "Colonel");
     }
 
+    @Order(1)
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
-    public void testAdd(ProductCategoryDao category){
+    public void testCategoryAdd(ProductCategoryDao category){
         category.add(testCategory);
         assertNotNull(category.find(400));
     }
 
+    @Order(2)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
-    public void testAdd(SupplierDao supplier){
+    public void testSupplierAdd(SupplierDao supplier){
         supplier.add(testSupplier);
         assertNotNull(supplier.find(500));
     }
 
+    @Order(3)
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
-    public void testFind(ProductCategoryDao category){
+    public void testCategoryFind(ProductCategoryDao category){
         assertEquals("RomanCategory", category.find(400).getName());
     }
 
+    @Order(4)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
-    public void testFind(SupplierDao supplier){
+    public void testSupplierFind(SupplierDao supplier){
         assertEquals("RomanSupplier", supplier.find(500).getName());
     }
 
+    @Order(5)
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
-    public void testGetAll(ProductCategoryDao category){
+    public void testGetAllCategories(ProductCategoryDao category){
         assertEquals(1, category.getAll().size());
     }
 
+    @Order(6)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
-    public void testGetAll(SupplierDao supplier){
+    public void testGetAllSuppliers(SupplierDao supplier){
         assertEquals(1, supplier.getAll().size());
     }
 
+    @Order(7)
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
-    public void testRemove(ProductCategoryDao category){
+    public void testCategoryRemove(ProductCategoryDao category){
         category.remove(400);
         assertNull(category.find(400));
     }
 
+    @Order(8)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
-    public void testRemove(SupplierDao supplier){
+    public void testSupplierRemove(SupplierDao supplier){
         supplier.remove(500);
         assertNull(supplier.find(500));
     }
