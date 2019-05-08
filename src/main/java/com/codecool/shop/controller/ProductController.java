@@ -18,7 +18,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,14 +31,9 @@ public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoDb.getInstance();
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoDb.getInstance();
     private SupplierDao supplierDao = SupplierDaoDb.getInstance();
-    private String category = "";
-    private String supplier = "";
-
-    private ProductCategory categoryObj= productCategoryDataStore.find(1);
-    private Supplier supplierObj= supplierDao.find(1);
+    private final ProductCategory defaultCategory = productCategoryDataStore.find(1);
 
     private static Map<String, Integer> cartMap = new HashMap<>();
-
     public static Map<String, Integer> getCartMap() {
         return cartMap;
     }
@@ -47,15 +45,23 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
+        HttpSession session = request.getSession();
+        if (session.isNew()) {
+            session.setAttribute("categ", defaultCategory);
+            session.setAttribute("selectedCateg", defaultCategory.getName());
+            session.setAttribute("selectedSupplier", "");
+        }
+
         Map<String, Object> params = new HashMap<String, Object>() {{
-            put("categ", categoryObj);
-            put("selectedCateg", category);
-            put("selectedSupplier", supplier);
+            put("categ", session.getAttribute("categ"));
+            put("selectedCateg", session.getAttribute("selectedCateg"));
+            put("selectedSupplier", session.getAttribute("selectedSupplier"));
             put("suppliers", supplierDao.getAll());
             put("categories", productCategoryDataStore.getAll());
         }};
 
-        List<Product> products = productDataStore.getProducts(supplierObj, categoryObj);
+        //List<Product> products = productDataStore.getProducts(supplierObj, categoryObj);
+        List<Product> products = selectProducts(request, session);
         params.put("products", products);
 
 
@@ -73,7 +79,37 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    @Override
+    private List<Product> selectProducts(HttpServletRequest request, HttpSession session) {
+        List<Product> products;
+
+        String categoryName = request.getParameter("category");
+        ProductCategory category = productCategoryDataStore.find(categoryName);
+        String supplierName = request.getParameter("suppler");
+        Supplier supplier =supplierDao.find(supplierName);
+
+        if (category == null && supplier == null) {
+            products = productDataStore.getBy(defaultCategory);
+            System.out.println(categoryName);
+            System.out.println(supplierName);
+        }
+        else if (category == null) {
+            products = productDataStore.getBy(supplier);
+        }
+        else if (supplier == null) {
+            products = productDataStore.getBy(category);
+        } else {
+            // TODO is getProducts(Obj, Obj) necessary?
+            products = productDataStore.getProducts(categoryName, supplierName);
+        }
+
+        session.setAttribute("categ", category);
+        session.setAttribute("selectedCateg", categoryName);
+        session.setAttribute("selectedSupplier", supplierName);
+
+        return products;
+    }
+
+   /* @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -122,7 +158,7 @@ public class ProductController extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             engine.process("product/index", context, response.getWriter());
         }
-    }
+    }*/
 }
 
 //SupplierObj can't be null -> otherwise server error.
