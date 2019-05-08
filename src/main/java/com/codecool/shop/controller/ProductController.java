@@ -13,12 +13,10 @@ import com.codecool.shop.model.Supplier;
 import com.codecool.shop.model.order.Order;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -40,29 +38,35 @@ public class ProductController extends HttpServlet {
 
         String categoryName = request.getParameter("category");
         String supplierName = request.getParameter("supplier");
+        System.out.println(categoryName);
+        System.out.println(supplierName);
 
-        List<Product> products = selectProducts(categoryName, supplierName);
+        List<Product> products = selectProducts(categoryName, supplierName, request);
         Map<String, Object> parameters = getServletParameters(categoryName, supplierName, products);
 
         String addId = request.getParameter("item_id");
 
         if (addId != null) {
             addToCart(request);
+            response.sendRedirect(request.getCookies()[0].getValue());
+        } else {
+            parameters.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
+            response.setCharacterEncoding("UTF-8");
+            engine.process("product/index", context, response.getWriter());
         }
 
-        parameters.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
-        response.setCharacterEncoding("UTF-8");
-        engine.process("product/index", context, response.getWriter());
     }
 
     private void addToCart(HttpServletRequest request) {
         Order order;
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         if (session.isNew()) {
             order = new Order();
         } else {
+            System.out.println("mivannnn");
             order = (Order) session.getAttribute("order");
         }
+
         String addId = request.getParameter("item_id");
         if (addId != null) {
             order.getShoppingCart().addProduct(Integer.parseInt(addId));
@@ -70,7 +74,7 @@ public class ProductController extends HttpServlet {
         session.setAttribute("order", order);
     }
 
-    private List<Product> selectProducts(String categoryName, String supplierName) {
+    private List<Product> selectProducts(String categoryName, String supplierName, HttpServletRequest request) {
         List<Product> products;
 
         ProductCategory category = productCategoryDataStore.find(categoryName);
@@ -87,6 +91,7 @@ public class ProductController extends HttpServlet {
             products = productDataStore.getProducts(categoryName, supplierName);
         }
 
+        request.getCookies()[0].setValue((String.format("/?category=%s&supplier=%s", categoryName, supplierName)));
         return products;
     }
 
