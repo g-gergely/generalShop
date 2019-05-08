@@ -70,7 +70,7 @@
                                 </button>
                             </form>
                         </td>
-                        <td th:text="${general.defaultPrice} + ' Talentum'"></td>
+                        <td th:text="${general.defaultPrice * cartMap.get(general)} + ' Talentum'"></td>
                     </tr>
                     <tr class="bold-left">
                         <td colspan="3">Total Price:</td>

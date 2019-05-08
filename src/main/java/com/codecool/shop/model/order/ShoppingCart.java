@@ -1,7 +1,6 @@
 package com.codecool.shop.model.order;
 
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.model.Product;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
