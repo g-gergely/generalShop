@@ -74,20 +74,25 @@ public class ProductController extends HttpServlet {
 
         if (category == null && supplier == null) {
             products = productDataStore.getBy(defaultCategory);
-            System.out.println(categoryName);
-            System.out.println(supplierName);
+            params.put("filter", String.format("%s Generals", defaultCategory.getName()));
         }
         else if (category == null) {
             products = productDataStore.getBy(supplier);
+            params.put("filter", String.format("Generals from %s", supplier.getName()));
         }
         else if (supplier == null) {
             products = productDataStore.getBy(category);
+            params.put("filter", String.format("%s Generals", category.getName()));
         } else {
             // TODO is getProducts(Obj, Obj) necessary?
             products = productDataStore.getProducts(categoryName, supplierName);
+            params.put("filter", String.format("%s Generals from %s", category.getName(), supplier.getName()));
         }
 
-        params.put("categ", category);
+        if (products.size() == 0) {
+            params.put("filter", "No results found.");
+        }
+
         params.put("selectedCateg", categoryName);
         params.put("selectedSupplier", supplierName);
         params.put("suppliers", supplierDao.getAll());
