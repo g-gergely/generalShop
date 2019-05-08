@@ -32,7 +32,6 @@ public class ProductController extends HttpServlet {
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoDb.getInstance();
     private SupplierDao supplierDao = SupplierDaoDb.getInstance();
     private final ProductCategory defaultCategory = productCategoryDataStore.find(1);
-    private Map<String, Object> params = new HashMap<>();
 
     private static Map<String, Integer> cartMap = new HashMap<>();
     public static Map<String, Integer> getCartMap() {
@@ -46,14 +45,17 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-        List<Product> products = selectProducts(request);
-        params.put("products", products);
+        String categoryName = request.getParameter("category");
+        String supplierName = request.getParameter("supplier");
 
-        params.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
+        List<Product> products = selectProducts(categoryName, supplierName);
+        Map<String, Object> parameters = getServletParameters(categoryName, supplierName, products);
+
+        parameters.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
         response.setCharacterEncoding("UTF-8");
         engine.process("product/index", context, response.getWriter());
 
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
         String addId = request.getParameter("item_id");
 
         if (addId != null) {
@@ -64,40 +66,53 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    private List<Product> selectProducts(HttpServletRequest request) {
+    private List<Product> selectProducts(String categoryName, String supplierName) {
         List<Product> products;
 
-        String categoryName = request.getParameter("category");
         ProductCategory category = productCategoryDataStore.find(categoryName);
-        String supplierName = request.getParameter("supplier");
-        Supplier supplier =supplierDao.find(supplierName);
+        Supplier supplier = supplierDao.find(supplierName);
 
         if (category == null && supplier == null) {
             products = productDataStore.getBy(defaultCategory);
-            params.put("filter", String.format("%s Generals", defaultCategory.getName()));
-        }
-        else if (category == null) {
+        } else if (category == null) {
             products = productDataStore.getBy(supplier);
-            params.put("filter", String.format("Generals from %s", supplier.getName()));
-        }
-        else if (supplier == null) {
+        } else if (supplier == null) {
             products = productDataStore.getBy(category);
-            params.put("filter", String.format("%s Generals", category.getName()));
         } else {
             // TODO is getProducts(Obj, Obj) necessary?
             products = productDataStore.getProducts(categoryName, supplierName);
-            params.put("filter", String.format("%s Generals from %s", category.getName(), supplier.getName()));
         }
-
-        if (products.size() == 0) {
-            params.put("filter", "No results found.");
-        }
-
-        params.put("selectedCateg", categoryName);
-        params.put("selectedSupplier", supplierName);
-        params.put("suppliers", supplierDao.getAll());
-        params.put("categories", productCategoryDataStore.getAll());
 
         return products;
+    }
+
+    private HashMap<String, Object> getServletParameters(String categoryName, String supplierName, List<Product> products) {
+        HashMap<String, Object> parameters = new HashMap<>();
+
+        ProductCategory category = productCategoryDataStore.find(categoryName);
+        Supplier supplier = supplierDao.find(supplierName);
+
+        if (category == null && supplier == null) {
+            parameters.put("filter", String.format("%s Generals", defaultCategory.getName()));
+        } else if (category == null) {
+            parameters.put("filter", String.format("Generals from %s", supplier.getName()));
+        } else if (supplier == null) {
+            parameters.put("filter", String.format("%s Generals", category.getName()));
+        } else {
+            parameters.put("filter", String.format("%s Generals from %s", category.getName(), supplier.getName()));
+        }
+
+        parameters.put("products", products);
+
+        if (products.size() == 0) {
+            parameters.put("filter", "No results found.");
+        }
+
+        parameters.put("selectedCateg", categoryName);
+        parameters.put("selectedSupplier", supplierName);
+        parameters.put("suppliers", supplierDao.getAll());
+        parameters.put("categories", productCategoryDataStore.getAll());
+
+        return parameters;
     }
 }
