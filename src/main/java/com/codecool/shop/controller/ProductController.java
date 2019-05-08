@@ -34,11 +34,6 @@ public class ProductController extends HttpServlet {
     private final ProductCategory defaultCategory = productCategoryDataStore.find(1);
     private Map<String, Object> params = new HashMap<>();
 
-    private static Map<String, Integer> cartMap = new HashMap<>();
-    public static Map<String, Integer> getCartMap() {
-        return cartMap;
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,15 +48,27 @@ public class ProductController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         engine.process("product/index", context, response.getWriter());
 
-        HttpSession session = request.getSession();
-        String addId = request.getParameter("item_id");
+        addToCart(request);
+
+        /*String addId = request.getParameter("item_id");
 
         if (addId != null) {
             Product chosen = productDataStore.find(Integer.parseInt(addId));
             String identifier = chosen.getDefaultPrice() + "!" + addId + "?" + chosen.getName();
             int amount = cartMap.get(identifier) != null ? cartMap.get(identifier) + 1 : 1;
             cartMap.put(identifier, amount);
+        }*/
+    }
+
+    private void addToCart(HttpServletRequest request) {
+        Map<Product, Integer> cart = new HashMap<>();
+        HttpSession session = request.getSession();
+        String addId = request.getParameter("item_id");
+        if (addId != null) {
+            Product chosenProduct = productDataStore.find(Integer.parseInt(addId));
+
         }
+
     }
 
     private List<Product> selectProducts(HttpServletRequest request) {
