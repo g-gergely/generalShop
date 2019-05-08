@@ -38,17 +38,20 @@ public class ProductController extends HttpServlet {
 
         String categoryName = request.getParameter("category");
         String supplierName = request.getParameter("supplier");
-        System.out.println(categoryName);
-        System.out.println(supplierName);
 
-        List<Product> products = selectProducts(categoryName, supplierName, request);
+        List<Product> products = selectProducts(categoryName, supplierName, request.getSession());
         Map<String, Object> parameters = getServletParameters(categoryName, supplierName, products);
 
         String addId = request.getParameter("item_id");
 
         if (addId != null) {
             addToCart(request);
-            response.sendRedirect(request.getCookies()[0].getValue());
+            String url = (String) request.getSession().getAttribute("url");
+
+            if (url == null) {
+                url = "/";
+            }
+            response.sendRedirect(url);
         } else {
             parameters.forEach(((key, value) -> context.setVariable(String.valueOf(key), value)));
             response.setCharacterEncoding("UTF-8");
@@ -58,12 +61,11 @@ public class ProductController extends HttpServlet {
     }
 
     private void addToCart(HttpServletRequest request) {
-        Order order;
-        HttpSession session = request.getSession();
-        if (session.isNew()) {
+        HttpSession session = request.getSession(true);
+        Order order = (Order) session.getAttribute("order");
+        if (order == null) {
             order = new Order();
         } else {
-            System.out.println("mivannnn");
             order = (Order) session.getAttribute("order");
         }
 
@@ -74,7 +76,7 @@ public class ProductController extends HttpServlet {
         session.setAttribute("order", order);
     }
 
-    private List<Product> selectProducts(String categoryName, String supplierName, HttpServletRequest request) {
+    private List<Product> selectProducts(String categoryName, String supplierName, HttpSession session) {
         List<Product> products;
 
         ProductCategory category = productCategoryDataStore.find(categoryName);
@@ -90,8 +92,10 @@ public class ProductController extends HttpServlet {
             // TODO is getProducts(Obj, Obj) necessary?
             products = productDataStore.getProducts(categoryName, supplierName);
         }
+        if (categoryName != null || supplierName != null) {
+            session.setAttribute("url", (String.format("/?category=%s&supplier=%s", categoryName, supplierName)));
 
-        request.getCookies()[0].setValue((String.format("/?category=%s&supplier=%s", categoryName, supplierName)));
+        }
         return products;
     }
 

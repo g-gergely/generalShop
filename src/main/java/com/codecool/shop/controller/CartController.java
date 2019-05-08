@@ -38,8 +38,11 @@ public class CartController extends HttpServlet {
             cart.removeProduct(Integer.parseInt(removeId));
         }
 
+        String url = (String) request.getSession().getAttribute("url");
+
         context.setVariable("cartMap", cart.getCart(productDataStore));
         context.setVariable("cartValue", cart.getTotalPrice(productDataStore));
+        context.setVariable("previousURL", url == null ? "/" : url);
         engine.process("product/cart", context, response.getWriter());
     }
 }

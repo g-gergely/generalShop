@@ -16,7 +16,6 @@ public class ShoppingCart {
         for (Integer prodId : cart.keySet()) {
             goodCart.put(productDataStore.find(prodId), cart.get(prodId));
         }
-
         return goodCart;
     }
 
