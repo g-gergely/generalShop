@@ -43,9 +43,10 @@ public class ProductController extends HttpServlet {
         Map<String, Object> parameters = getServletParameters(categoryName, supplierName, products);
 
         String addId = request.getParameter("item_id");
+        HttpSession session = request.getSession(true);
 
         if (addId != null) {
-            addToCart(request);
+            addToCart(addId, session);
             String url = (String) request.getSession().getAttribute("url");
 
             if (url == null) {
@@ -59,20 +60,19 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    private void addToCart(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-
+    private void addToCart(String addId, HttpSession session) {
         Order order = (Order) session.getAttribute("order");
+
         if (order == null) {
             order = new Order();
         } else {
             order = (Order) session.getAttribute("order");
         }
 
-        String addId = request.getParameter("item_id");
         if (addId != null) {
             order.getShoppingCart().addProduct(Integer.parseInt(addId));
         }
+
         session.setAttribute("order", order);
     }
 
