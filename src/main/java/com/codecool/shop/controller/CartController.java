@@ -14,7 +14,7 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
-    private Map<String, Integer> cart = ProductController.getCartMap();
+    //private Map<String, Integer> cart = ProductController.getCartMap();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,7 +24,7 @@ public class CartController extends HttpServlet {
         String addKey = request.getParameter("add");
         String removeKey = request.getParameter("remove");
 
-        if (addKey != null) {
+       /*if (addKey != null) {
             int value = cart.get(addKey);
             cart.put(addKey, value + 1);
         }
@@ -42,6 +42,6 @@ public class CartController extends HttpServlet {
 
         context.setVariable("cartMap", cart);
         context.setVariable("cartValue", cartValue);
-        engine.process("product/cart", context, response.getWriter());
+        engine.process("product/cart", context, response.getWriter());*/
     }
 }
