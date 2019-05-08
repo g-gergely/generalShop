@@ -14,7 +14,7 @@ public class ProductDaoDb implements ProductDao {
 
     private static ProductDaoDb instance = null;
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/store";
+    private static final String DATABASE = System.getenv("DATABASE");
     private static final String DBUSER = System.getenv("USER");
     private static final String DBPASSWORD = System.getenv("PASSWORD");
 
