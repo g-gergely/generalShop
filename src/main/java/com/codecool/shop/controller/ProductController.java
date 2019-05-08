@@ -36,14 +36,15 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
+        HttpSession session = request.getSession(true);
+
         String categoryName = request.getParameter("category");
         String supplierName = request.getParameter("supplier");
 
-        List<Product> products = selectProducts(categoryName, supplierName, request.getSession());
+        List<Product> products = selectProducts(categoryName, supplierName, session);
         Map<String, Object> parameters = getServletParameters(categoryName, supplierName, products);
 
         String addId = request.getParameter("item_id");
-        HttpSession session = request.getSession(true);
 
         if (addId != null) {
             addToCart(addId, session);

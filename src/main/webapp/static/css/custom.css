@@ -204,6 +204,9 @@ img {
     padding: 10px;
     text-align: -webkit-center;
 }
+#cart-content-table {
+    margin: 0 auto;
+}
 
 span {
     padding: 4px;
