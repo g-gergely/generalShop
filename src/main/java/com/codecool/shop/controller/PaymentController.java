@@ -17,22 +17,14 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
-    private static final List<String> PAYMENT_OPTIONS = new ArrayList<String>(Arrays.asList("Slave", "Life", "Talent"));
+    private static final List<String> PAYMENT_OPTIONS = new ArrayList<>(Arrays.asList("Slave", "Life", "Talent"));
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-
         context.setVariable("paymentOptions", PAYMENT_OPTIONS);
         engine.process("order/payment", context, response.getWriter());
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Order order = (Order) request.getSession().getAttribute("order");
-        order.setPaymentStatus(order.getPaymentStatus().getNext());
-        request.getSession().setAttribute("order", order);
     }
 }

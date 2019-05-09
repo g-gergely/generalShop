@@ -21,6 +21,11 @@ body {
     min-height: 100%;
 }
 
+.centered {
+    text-align: center;
+    text-align: -webkit-center;
+}
+
 h1 {
     font-family: 'Chelsea Market', cursive;
     font-size: 3em;
@@ -226,6 +231,7 @@ span {
     color: white;
 }
 
-#payment-options-table td {
-    text-align: -webkit-center;
+.wrapper #payment-container {
+    width: 50%;
+    margin: 0 auto;
 }

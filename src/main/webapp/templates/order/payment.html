@@ -38,13 +38,13 @@
             <div class="card-text" id="payment-container">
                 <table class="table" id="payment-options-table">
                     <tr>
-                        <form action="/payment" method="post">
+                        <form action="/confirm" method="post">
                             <td th:each="option: ${paymentOptions}">
                                 <img class="payment-image" src="http://placehold.it/400x250/000/fff"
                                      th:attr="src='/static/img/' + ${option} + '.png'"
                                      alt=""/>
 
-                                <button class="btn btn-success" type="submit" name="option" th:value="${option}" th:text="${option}">
+                                <button class="btn custom-product-button" type="submit" name="option" th:value="${option}" th:text="${option}">
                                 </button>
                             </td>
                         </form>
@@ -52,7 +52,7 @@
                 </table>
             </div>
             <div id="payment-back">
-                <a class="btn btn-info" href="/cart">Back</a>
+                <a class="btn custom-button" href="/cart">Back</a>
             </div>
             <div th:replace="footer.html :: foot"></div>
         </div>
