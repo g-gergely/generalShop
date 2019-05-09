@@ -30,9 +30,6 @@ public class ConfirmationController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-        String thx = "Payment is processed. Thank you for your order.";
-        context.setVariable("confirmMessage", thx);
-
         engine.process("order/confirmation", context, response.getWriter());
     }
 

@@ -21,8 +21,8 @@ body {
     min-height: 100%;
 }
 
-.centered {
-    text-align: center;
+.confirm-centered {
+    text-align: -webkit-center;
 }
 
 .bold-left {
@@ -204,6 +204,7 @@ img {
     padding: 10px;
     text-align: -webkit-center;
 }
+
 #cart-content-table {
     margin: 0 auto;
 }
@@ -220,4 +221,11 @@ span {
     background-color: rgba(255, 255, 255, 0.65);
     width: 80%;
     margin-left: 10%;
+}
+
+.confirmation-message {
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.65);
+    width: 80%;
+    margin: 30px;
 }

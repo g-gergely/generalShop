@@ -5,19 +5,20 @@
     <meta name="author" content="Codecool"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>Order Confirmed!</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 </head>
 <body>
-    <div id="confirm-wrapper">
-        <div>
-            <p th:text="${confirmMessage}"></p>
+    <div id="wrapper" class="confirm-centered">
+        <div class="card-text confirmation-message" id="cart-container">
+            <div>
+                <p>Payment is processed. Thank you for your order.</p>
+            </div>
         </div>
         <div>
             <form action="/confirm" method="post">
                 <button type="submit">Send email</button>
             </form>
         </div>
-
-
         <div th:replace="footer.html :: foot"></div>
     </div>
 </body>
