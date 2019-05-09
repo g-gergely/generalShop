@@ -30,6 +30,8 @@ public class ConfirmationController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
+        request.getSession().removeAttribute("order");
+
         engine.process("order/confirmation", context, response.getWriter());
     }
 
@@ -114,7 +116,7 @@ public class ConfirmationController extends HttpServlet {
                 "            <tbody>" + generals +
                 "               <tr></tr>" +
                 "               <tr>\n" +
-                "                    <td><span style=\"font-weight: bold\">Total Price:" + total + "</span></td>\n" +
+                "                    <td><span style=\"font-weight: bold\">Total Price: " + total + "</span></td>\n" +
                 "                    <td></td>\n" +
                 "                </tr>\n" +
                 "            </tbody>\n" +
