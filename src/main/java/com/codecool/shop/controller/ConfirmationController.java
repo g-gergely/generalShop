@@ -116,8 +116,9 @@ public class ConfirmationController extends HttpServlet {
                 "            <tbody>" + generals +
                 "               <tr></tr>" +
                 "               <tr>\n" +
-                "                    <td><span style=\"font-weight: bold\">Total Price: " + total + "</span></td>\n" +
+                "                    <td><span style=\"font-weight: bold\">Total Price:</span></td>\n" +
                 "                    <td></td>\n" +
+                "                    <td><span style=\"font-weight: bold\">" + total + " Talentum</span></td>\n" +
                 "                </tr>\n" +
                 "            </tbody>\n" +
                 "        </table>\n" +
