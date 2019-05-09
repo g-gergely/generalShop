@@ -1,5 +1,5 @@
-package com.codecool.shop.dao;
-
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoDb;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 
@@ -39,7 +39,7 @@ class DaoTest {
 
     //initialize a ProductCategory and a Supplier object with these attributes:
     @BeforeAll
-    private void init(){
+    public void setUp(){
         testCategory = new ProductCategory(400, "RomanCategory", "Lieutenant", "Let's go");
         testSupplier = new Supplier(500, "RomanSupplier", "Colonel");
     }
@@ -99,6 +99,7 @@ class DaoTest {
     public void testCategoryRemove(ProductCategoryDao category){
         category.remove(400);
         assertNull(category.find(400));
+        assertEquals(0, category.getAll().size());
     }
 
 
@@ -108,5 +109,6 @@ class DaoTest {
     public void testSupplierRemove(SupplierDao supplier){
         supplier.remove(500);
         assertNull(supplier.find(500));
+        assertEquals(0, supplier.getAll().size());
     }
 }
