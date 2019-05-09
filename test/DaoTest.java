@@ -101,35 +101,35 @@ class DaoTest {
         assertEquals("RomanCategory", category.find(400).getName());
     }
 
-    @Order(4)
+    @Order(5)
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
     public void testCategoryFindByString(ProductCategoryDao category){
         assertEquals(400, category.find("RomanCategory").getId());
     }
 
-    @Order(5)
+    @Order(6)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
     public void testSupplierFind(SupplierDao supplier){
         assertEquals("RomanSupplier", supplier.find(500).getName());
     }
 
-    @Order(4)
+    @Order(7)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
     public void testSupplierFindByString(SupplierDao supplier){
         assertEquals(500, supplier.find("RomanSupplier").getId());
     }
 
-    @Order(6)
+    @Order(8)
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testProductFindByID(ProductDao product){
         assertEquals("RomanMan", product.find(100).getName());
     }
 
-    @Order(7)
+    @Order(9)
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testProductFindBySupplier(ProductDao product){
@@ -137,7 +137,7 @@ class DaoTest {
         assertEquals(0, product.getBy(falseSupplier).size());
     }
 
-    @Order(8)
+    @Order(10)
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testProductFindByProductCategory(ProductDao product){
@@ -145,7 +145,7 @@ class DaoTest {
         assertEquals(0, product.getBy(falseCategory).size());
     }
 
-    @Order(9)
+    @Order(11)
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testGetProductsByString(ProductDao product){
@@ -156,21 +156,21 @@ class DaoTest {
         assertThrows(NullPointerException.class, () -> product.getProducts("jhijn", testSupplier.getName()));
     }
 
-    @Order(10)
+    @Order(12)
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
     public void testGetAllCategories(ProductCategoryDao category){
         assertEquals(2, category.getAll().size());
     }
 
-    @Order(11)
+    @Order(13)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
     public void testGetAllSuppliers(SupplierDao supplier){
         assertEquals(2, supplier.getAll().size());
     }
 
-    @Order(12)
+    @Order(14)
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testProductGetAllProducts(ProductDao product){
@@ -178,7 +178,7 @@ class DaoTest {
     }
 
     //remove is left for last as it will remove the data from the database as well
-    @Order(13)
+    @Order(15)
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testProductRemove(ProductDao product){
@@ -187,7 +187,7 @@ class DaoTest {
         assertEquals(0, product.getAll().size());
     }
 
-    @Order(14)
+    @Order(16)
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
     public void testCategoryRemove(ProductCategoryDao category){
@@ -198,7 +198,7 @@ class DaoTest {
     }
 
 
-    @Order(15)
+    @Order(17)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
     public void testSupplierRemove(SupplierDao supplier){
