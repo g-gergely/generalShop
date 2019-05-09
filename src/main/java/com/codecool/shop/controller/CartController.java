@@ -34,7 +34,7 @@ public class CartController extends HttpServlet {
         String url = (String) request.getSession().getAttribute("url");
 
         context.setVariable("cartMap", cart != null ? cartContent : new LinkedHashMap<>());
-        context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
+        context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice()) : "");
         context.setVariable("previousURL", url == null ? "/" : url);
         engine.process("order/cart", context, response.getWriter());
     }

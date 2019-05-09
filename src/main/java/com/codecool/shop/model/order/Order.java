@@ -4,19 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
-    private String username;
+    private String name;
     private String emailAddress;
     private String phoneNumber;
     private Map<String, String> billingAddress = new HashMap<>();
     private Map<String, String> shippingAddress = new HashMap<>();
     private ShoppingCart shoppingCart = new ShoppingCart();
+    private PaymentStatus paymentStatus = PaymentStatus.NEW;
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmailAddress() {
@@ -53,5 +54,13 @@ public class Order {
 
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

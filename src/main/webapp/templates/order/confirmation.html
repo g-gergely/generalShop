@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Order Confirmed!</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+</head>
+<body>
+    <div id="wrapper" class="centered">
+        <div class="card-text confirmation-message" id="cart-container">
+            <div>
+                <p>Payment is processed. Thank you for your order.</p>
+            </div>
+        </div>
+        <div th:replace="footer.html :: foot"></div>
+    </div>
+</body>
+</html>

@@ -23,75 +23,7 @@ body {
 
 .centered {
     text-align: center;
-}
-
-.bold-left {
-    font-weight: bold;
-    text-align: left;
-}
-
-.flex-row-reverse {
-    margin-right: 2%;
-}
-
-.glyphicon {
-    margin-right: 5px;
-}
-
-.thumbnail {
-    margin-bottom: 20px;
-    padding: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-}
-
-.thumbnail img {
-    margin-top: 10px;
-}
-
-.item.list-group-item {
-    float: none;
-    width: 100%;
-    background-color: #fff;
-    margin-bottom: 10px;
-}
-
-.item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
-    background: #428bca;
-}
-
-.item.list-group-item .list-group-image {
-    margin-right: 10px;
-}
-
-.item.list-group-item .thumbnail {
-    margin-bottom: 0;
-}
-
-.item.list-group-item .caption {
-    padding: 9px 9px 0 9px;
-}
-
-.item.list-group-item:nth-of-type(odd) {
-    background: #eeeeee;
-}
-
-.item.list-group-item:before, .item.list-group-item:after {
-    display: table;
-    content: " ";
-}
-
-.item.list-group-item img {
-    float: left;
-}
-
-.item.list-group-item:after {
-    clear: both;
-}
-
-.list-group-item-text {
-    margin: 0 0 11px;
+    text-align: -webkit-center;
 }
 
 h1 {
@@ -200,10 +132,11 @@ img {
     width: 100px;
 }
 
-#cart-container {
+#cart-container, #payment-container {
     padding: 10px;
     text-align: -webkit-center;
 }
+
 #cart-content-table {
     margin: 0 auto;
 }
@@ -212,12 +145,100 @@ span {
     padding: 4px;
 }
 
-#cart-back {
-    margin: 10px;
+#cart-back, #payment-back {
+    text-align: center;
 }
 
 #products {
     background-color: rgba(255, 255, 255, 0.65);
     width: 80%;
     margin-left: 10%;
+}
+
+.confirmation-message {
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.65);
+    width: 80%;
+    margin: 30px;
+}
+
+#back-to-cart {
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+#form-container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.65);
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+#form-container .address h5 {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+#form-container .address p {
+    text-align: center;
+}
+
+#form-container .address fieldset {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#form-container form label, #form-container form input {
+    display: block;
+}
+#form-container form .address input, #form-container form .address label {
+    display: inline;
+}
+
+#form-container form label {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px auto;
+}
+
+#form-container form input {
+    width: 300px;
+    margin: 0 auto;
+    padding: 3px;
+}
+
+#form-container form input[type=submit] {
+    margin-top: 30px;
+}
+
+#form-container form input[type=submit]:hover {
+    cursor: pointer;
+}
+
+#form-container form #zipcode, #form-container form #s-zipcode, #form-container form #number, #form-container form #s-number {
+    width: 100px;
+}
+#form-container form #country, #form-container form #s-country, #form-container form #street, #form-container form #s-street {
+    width: 150px;
+}
+.custom-button {
+    background-color: darkslateblue;
+    color: white;
+}
+.custom-product-button {
+    background-color: slateblue;
+    color: white;
+}
+
+.custom-button:hover, .custom-product-button:hover {
+    box-shadow: 0 0 10px black;
+    color: white;
+}
+
+.wrapper #payment-container {
+    width: 50%;
+    margin: 0 auto;
 }
