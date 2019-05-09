@@ -12,7 +12,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
 
     private static ProductCategoryDaoDb instance = null;
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/store";
+    private static final String DATABASE = System.getenv("DATABASE");
     private static final String DBUSER = System.getenv("USER");
     private static final String DBPASSWORD = System.getenv("PASSWORD");
 
@@ -43,6 +43,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
         return categories;
     }
@@ -64,6 +65,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
 
         return category;
@@ -93,6 +95,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
 
         return category;
