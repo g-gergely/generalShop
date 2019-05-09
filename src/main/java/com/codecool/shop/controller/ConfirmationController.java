@@ -36,41 +36,44 @@ public class ConfirmationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Order order = (Order) request.getSession().getAttribute("order");
-        ShoppingCart cart = order.getShoppingCart();
+        PaymentStatus currentStatus = order.getPaymentStatus();
 
-//        if (order.getPaymentStatus() == PaymentStatus.PAID) {
-        String to = order.getEmailAddress();
-        String subject = "General Shop - Order confirmation";
-        String body = createEmailBody(cart);
+        if (currentStatus.getNext() == PaymentStatus.PAID) {
+            ShoppingCart cart = order.getShoppingCart();
+            String to = order.getEmailAddress();
+            String subject = "General Shop - Order confirmation";
+            String body = createEmailBody(cart);
 
-        String host = "smtp.gmail.com";
-        String from = System.getenv("GMUS");
-        String pass = System.getenv("GMPW");
+            String host = "smtp.gmail.com";
+            String from = System.getenv("GMUS");
+            String pass = System.getenv("GMPW");
 
-        Properties props = getProperties(host, from, pass);
+            Properties props = getProperties(host, from, pass);
 
-        Session session = Session.getDefaultInstance(props);
-        MimeMessage message = new MimeMessage(session);
+            Session session = Session.getDefaultInstance(props);
+            MimeMessage message = new MimeMessage(session);
 
-        try {
-            message.setFrom(new InternetAddress(from));
-            InternetAddress toAddress = new InternetAddress(to);
+            try {
+                message.setFrom(new InternetAddress(from));
+                InternetAddress toAddress = new InternetAddress(to);
 
-            message.addRecipient(Message.RecipientType.TO, toAddress);
+                message.addRecipient(Message.RecipientType.TO, toAddress);
 
-            message.setSubject(subject);
-            message.setContent(body, "text/html");
+                message.setSubject(subject);
+                message.setContent(body, "text/html");
 
-            Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, pass);
-            transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
-        } catch (MessagingException ae) {
-            ae.printStackTrace();
+                Transport transport = session.getTransport("smtp");
+                transport.connect(host, from, pass);
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
+            } catch (MessagingException ae) {
+                ae.printStackTrace();
+            }
+
+            order.setPaymentStatus(PaymentStatus.PAID);
+
+            response.sendRedirect("/confirm");
         }
-
-        response.sendRedirect("/confirm");
-//        }
     }
 
     private Properties getProperties(String host, String from, String pass) {
