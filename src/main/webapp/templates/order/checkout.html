@@ -41,19 +41,46 @@
     <div id="cart-back">
         <a class="btn btn-info" th:href="@{/cart}">Back</a>
     </div>
-    <div>
+    <div id="form-container">
         <form action="/checkout" method="POST">
             <label for="name">Name:</label>
-            <input type="text" id="name">
+            <input type="text" id="name" name="name" required>
             <label for="email">E-mail address:</label>
-            <input type="text" id="email">
+            <input type="text" id="email" name="email" required>
             <label for="phone">Telephone number:</label>
-            <input type="text" id="phone">
-            <label for="billing-address">Billing address</label>
-            <input type="text" id="billing-address">
-            <label for="shipping-address">Shipping address</label>
-            <input type="text" id="shipping-address">
-            <input type="submit" value="Submit">
+            <input type="text" id="phone" name="phone" required>
+            <div class="address">
+                <h5>Billing address:</h5>
+                <fieldset>
+                    <label for="country">Country:</label>
+                    <input type="text" id="country" name="country" required>
+                    <label for="zipcode">Zipcode:</label>
+                    <input type="text" id="zipcode" name="zipcode" required>
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                    <label for="street">Street:</label>
+                    <input type="text" id="street" name="street" required>
+                    <label for="number">Number:</label>
+                    <input type="text" id="number" name="doorNumber" required>
+                </fieldset>
+            </div>
+            <div class="address">
+                <h5>Shipping address:</h5>
+                <p>Fill this part only if your billing address and shipping address are not the same.</p>
+                <fieldset>
+                    <label for="s-country">Country:</label>
+                    <input type="text" id="s-country" name="sCountry">
+                    <label for="s-zipcode">Zipcode:</label>
+                    <input type="text" id="s-zipcode" name="sZipcode">
+                    <label for="s-city">City:</label>
+                    <input type="text" id="s-city" name="sCity">
+                    <label for="s-street">Street:</label>
+                    <input type="text" id="s-street" name="sStreet">
+                    <label for="s-number">Number:</label>
+                    <input type="text" id="s-number" name="sDoorNumber">
+                </fieldset>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-info">
         </form>
     </div>
 

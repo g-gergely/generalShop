@@ -10,13 +10,14 @@ public class Order {
     private Map<String, String> billingAddress = new HashMap<>();
     private Map<String, String> shippingAddress = new HashMap<>();
     private ShoppingCart shoppingCart = new ShoppingCart();
+    private PaymentStatus paymentStatus = PaymentStatus.NEW;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String username) {
+        this.name = username;
     }
 
     public String getEmailAddress() {
@@ -53,5 +54,13 @@ public class Order {
 
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 }
