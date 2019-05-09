@@ -10,6 +10,7 @@ public class Order {
     private Map<String, String> billingAddress = new HashMap<>();
     private Map<String, String> shippingAddress = new HashMap<>();
     private ShoppingCart shoppingCart = new ShoppingCart();
+    private PaymentStatus paymentStatus = PaymentStatus.NEW;
 
     public String getUsername() {
         return username;
@@ -53,5 +54,13 @@ public class Order {
 
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 }

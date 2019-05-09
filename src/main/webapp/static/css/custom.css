@@ -200,10 +200,11 @@ img {
     width: 100px;
 }
 
-#cart-container {
+#cart-container, #payment-container {
     padding: 10px;
     text-align: -webkit-center;
 }
+
 #cart-content-table {
     margin: 0 auto;
 }
@@ -212,7 +213,7 @@ span {
     padding: 4px;
 }
 
-#cart-back {
+#cart-back, #payment-back {
     margin: 10px;
 }
 
@@ -220,4 +221,8 @@ span {
     background-color: rgba(255, 255, 255, 0.65);
     width: 80%;
     margin-left: 10%;
+}
+
+#payment-options-table td {
+    text-align: -webkit-center;
 }
