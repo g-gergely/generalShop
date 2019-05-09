@@ -1,6 +1,6 @@
 package com.codecool.shop.model.order;
 
-import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.ProductDaoDb;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,10 +25,10 @@ public class ShoppingCart {
         }
     }
 
-    public float getTotalPrice(ProductDao productDataStore) {
+    public float getTotalPrice() {
         float totalPrice = 0;
         for (Integer productId: cart.keySet()) {
-            totalPrice += productDataStore.find(productId).getDefaultPrice() * cart.get(productId);
+            totalPrice += ProductDaoDb.getInstance().find(productId).getDefaultPrice() * cart.get(productId);
         }
         return totalPrice;
     }

@@ -16,8 +16,8 @@ public class Order {
         return name;
     }
 
-    public void setName(String username) {
-        this.name = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmailAddress() {
@@ -56,11 +56,11 @@ public class Order {
         return shoppingCart;
     }
 
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }
