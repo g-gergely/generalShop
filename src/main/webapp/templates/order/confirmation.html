@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Order Confirmed!</title>
+</head>
+<body>
+    <div id="confirm-wrapper">
+        <div>
+            <p th:text="${confirmMessage}"></p>
+        </div>
+        <div>
+            <form action="/confirm" method="post">
+                <button type="submit">Send email</button>
+            </form>
+        </div>
+
+
+        <div th:replace="footer.html :: foot"></div>
+    </div>
+</body>
+</html>
