@@ -127,10 +127,11 @@ img {
     width: 100px;
 }
 
-#cart-container {
+#cart-container, #payment-container {
     padding: 10px;
     text-align: -webkit-center;
 }
+
 #cart-content-table {
     margin: 0 auto;
 }
@@ -139,7 +140,7 @@ span {
     padding: 4px;
 }
 
-#cart-back {
+#cart-back, #payment-back {
     text-align: center;
 }
 
@@ -223,4 +224,8 @@ span {
 .custom-button:hover, .custom-product-button:hover {
     box-shadow: 0 0 10px black;
     color: white;
+}
+
+#payment-options-table td {
+    text-align: -webkit-center;
 }
