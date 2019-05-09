@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
@@ -29,11 +29,11 @@ public class CartController extends HttpServlet {
 
         ShoppingCart cart = modifyShoppingCartContent(request);
 
-        SortedMap<Product, Integer> cartContent = getShoppingCartWithObjectKeys(cart);
+        Map<Product, Integer> cartContent = getShoppingCartWithObjectKeys(cart);
 
         String url = (String) request.getSession().getAttribute("url");
 
-        context.setVariable("cartMap", cart != null ? cartContent : new TreeMap<>());
+        context.setVariable("cartMap", cart != null ? cartContent : new LinkedHashMap<>());
         context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
         context.setVariable("previousURL", url == null ? "/" : url);
         engine.process("product/cart", context, response.getWriter());
@@ -59,8 +59,8 @@ public class CartController extends HttpServlet {
         return cart;
     }
 
-    private SortedMap<Product, Integer> getShoppingCartWithObjectKeys(ShoppingCart cart) {
-        SortedMap<Product, Integer> cartContent = new TreeMap<>();
+    private Map<Product, Integer> getShoppingCartWithObjectKeys(ShoppingCart cart) {
+        Map<Product, Integer> cartContent = new LinkedHashMap<>();
         if (cart != null) {
             for (Integer prodId : cart.getCart().keySet()) {
                 cartContent.put(productDataStore.find(prodId), cart.getCart().get(prodId));
@@ -68,5 +68,4 @@ public class CartController extends HttpServlet {
         }
         return cartContent;
     }
-
 }

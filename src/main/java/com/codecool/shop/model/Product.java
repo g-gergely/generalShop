@@ -1,6 +1,6 @@
 package com.codecool.shop.model;
 
-public class Product extends BaseModel implements Comparable<Product> {
+public class Product extends BaseModel {
 
     private float defaultPrice;
     private String defaultCurrency;
@@ -73,11 +73,6 @@ public class Product extends BaseModel implements Comparable<Product> {
                 this.defaultCurrency,
                 this.productCategory.getName(),
                 this.supplier.getName());
-    }
-
-    @Override
-    public int compareTo(Product o) {
-        return name.compareTo(o.getName());
     }
 }
 // Constructor changed to have id.

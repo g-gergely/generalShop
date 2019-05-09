@@ -2,13 +2,14 @@ package com.codecool.shop.model.order;
 
 import com.codecool.shop.dao.ProductDao;
 
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 
 public class ShoppingCart {
-    private SortedMap<Integer, Integer> cart = new TreeMap<Integer, Integer>() {};
+    private Map<Integer, Integer> cart = new LinkedHashMap<Integer, Integer>() {};
 
-    public SortedMap<Integer, Integer> getCart() {
+    public Map<Integer, Integer> getCart() {
         return cart;
     }
 
