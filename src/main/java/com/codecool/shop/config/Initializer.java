@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class Initializer implements ServletContextListener {
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ProductDao productDataStore = ProductDaoDb.getInstance();
@@ -124,5 +123,3 @@ public class Initializer implements ServletContextListener {
         productDataStoreMem.add(new Product(17, "Publius Cornelius Scipio Africanus", 1100, "TAL", "A Roman general and later consul who is often regarded as one of the greatest military commanders and strategists of all time", roman, rome));
     }
 }
-
-// Ids added to products (otherwise they don't have any).

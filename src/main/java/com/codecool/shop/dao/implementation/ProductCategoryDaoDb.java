@@ -47,6 +47,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
         return categories;
     }
 
+    @Override
     public ProductCategory find(String name) {
         String sql = "SELECT * FROM product_category WHERE name=?;";
         ProductCategory category = null;

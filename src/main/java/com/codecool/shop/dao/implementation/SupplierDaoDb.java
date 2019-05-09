@@ -45,6 +45,7 @@ public class SupplierDaoDb implements SupplierDao {
         return suppliers;
     }
 
+    @Override
     public Supplier find(String name) {
         String sql = "SELECT * FROM supplier WHERE name=?;";
         Supplier supplier = null;

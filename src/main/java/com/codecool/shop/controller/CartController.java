@@ -1,6 +1,11 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.ProductDaoDb;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.order.Order;
+import com.codecool.shop.model.order.ShoppingCart;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -10,38 +15,57 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
-    private Map<String, Integer> cart = ProductController.getCartMap();
+    private ProductDao productDataStore = ProductDaoDb.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
 
-        String addKey = request.getParameter("add");
-        String removeKey = request.getParameter("remove");
+        ShoppingCart cart = modifyShoppingCartContent(request);
 
-        if (addKey != null) {
-            int value = cart.get(addKey);
-            cart.put(addKey, value + 1);
-        }
+        Map<Product, Integer> cartContent = getShoppingCartWithObjectKeys(cart);
 
-        if (removeKey != null) {
-            int value = cart.get(removeKey);
-            if (value < 2) {
-                cart.remove(removeKey);
-            } else {
-                cart.put(removeKey, value - 1);
+        String url = (String) request.getSession().getAttribute("url");
+
+        context.setVariable("cartMap", cart != null ? cartContent : new LinkedHashMap<>());
+        context.setVariable("cartValue", cart != null ? String.format("%s Talentum", cart.getTotalPrice(productDataStore)) : "");
+        context.setVariable("previousURL", url == null ? "/" : url);
+        engine.process("product/cart", context, response.getWriter());
+    }
+
+    private ShoppingCart modifyShoppingCartContent(HttpServletRequest request) {
+        String addId = request.getParameter("add");
+        String removeId = request.getParameter("remove");
+
+        Order order = (Order) request.getSession().getAttribute("order");
+        ShoppingCart cart = null;
+
+        if (order != null) {
+            cart = order.getShoppingCart();
+
+            if (addId != null) {
+                cart.addProduct(Integer.parseInt(addId));
+            }
+            if (removeId != null) {
+                cart.removeProduct(Integer.parseInt(removeId));
             }
         }
+        return cart;
+    }
 
-        double cartValue = cart.keySet().stream().mapToDouble(x -> Double.parseDouble(x.substring(0, x.indexOf("!"))) * (double) cart.get(x)).sum();
-
-        context.setVariable("cartMap", cart);
-        context.setVariable("cartValue", cartValue);
-        engine.process("product/cart", context, response.getWriter());
+    private Map<Product, Integer> getShoppingCartWithObjectKeys(ShoppingCart cart) {
+        Map<Product, Integer> cartContent = new LinkedHashMap<>();
+        if (cart != null) {
+            for (Integer prodId : cart.getCart().keySet()) {
+                cartContent.put(productDataStore.find(prodId), cart.getCart().get(prodId));
+            }
+        }
+        return cartContent;
     }
 }

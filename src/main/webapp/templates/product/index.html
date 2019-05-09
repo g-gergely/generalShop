@@ -49,7 +49,7 @@
         <div id="main-content">
             <div class="card" id="current-categ">
                 <!--/*@thymesVar id="categ" type="com.codecool.shop.model.ProductCategory"*/-->
-                <div id="current-categ-name" th:if="${categ}" th:text="|${categ.name} Generals|"></div>
+                <div id="current-categ-name" th:text="${filter}"></div>
             </div>
 
             <div th:replace="product/products.html :: prods"></div>
