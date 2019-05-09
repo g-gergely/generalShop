@@ -12,11 +12,10 @@ import java.util.List;
 
 public class ProductDaoDb implements ProductDao {
 
-    private static ProductDaoDb instance = null;
-
     private static final String DATABASE = System.getenv("DATABASE");
     private static final String DBUSER = System.getenv("USER");
     private static final String DBPASSWORD = System.getenv("PASSWORD");
+    private static ProductDaoDb instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
      */
@@ -134,15 +133,6 @@ public class ProductDaoDb implements ProductDao {
     public List<Product> getProducts(String category, String supplier) {
         int supplierId = SupplierDaoDb.getInstance().find(supplier).getId();
         int categoryId = ProductCategoryDaoDb.getInstance().find(category).getId();
-        String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
-                " AND product_category = " + categoryId +";";
-        return executeQuery(sql);
-    }
-
-    @Override
-    public List<Product> getProducts(Supplier supplierObj, ProductCategory categoryObj) {
-        int supplierId = SupplierDaoDb.getInstance().find(supplierObj.getName()).getId();
-        int categoryId = ProductCategoryDaoDb.getInstance().find(categoryObj.getName()).getId();
         String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
                 " AND product_category = " + categoryId +";";
         return executeQuery(sql);

@@ -37,11 +37,11 @@
         </div>
 
         <div id="cart-back">
-            <a class="btn btn-info" href="/">Back</a>
+            <a class="btn btn-info" th:href="${previousURL}">Back</a>
         </div>
 
         <div class="card-text" id="cart-container">
-            <table class="table">
+            <table class="table" id="cart-content-table">
                 <thead>
                     <tr>
                         <th>Photo</th>
@@ -51,28 +51,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="general: ${cartMap}">
+                    <tr th:each="general: ${cartMap.keySet()}">
                         <td style="width: 10%">
+                            <!--/*@thymesVar id="general" type="com.codecool.shop.model.Product"*/-->
                             <img class="cart-image" src="http://placehold.it/400x250/000/fff"
-                                 th:attr="src='/static/img/product_'
-                                 + ${#strings.substring(general.key, #strings.indexOf(general.key, '!') + 1, #strings.indexOf(general.key, '?'))} + '.jpg'"
+                                 th:attr="src='/static/img/product_' + ${general.id} + '.jpg'"
                                  alt=""/>
                         </td>
-                        <td th:text="${#strings.substringAfter(general.key, '?')}"></td>
+                        <!--/*@thymesVar id="general" type="com.codecool.shop.model.Product"*/-->
+                        <!--/*@thymesVar id="name" type="java.lang.String"*/-->
+                        <td th:text="${general.name}"></td>
                         <td>
                             <form action="/cart">
-                                <button class="btn btn-danger" type="submit" name="remove" th:value="${general.key}">-
+                                <button class="btn btn-danger" type="submit" name="remove" th:value="${general.id}">-
                                 </button>
-                                <span th:text="${general.value}"></span>
-                                <button class="btn btn-success" type="submit" name="add" th:value="${general.key}">+
+                                <span th:text="${cartMap.get(general)}"></span>
+                                <button class="btn btn-success" type="submit" name="add" th:value="${general.id}">+
                                 </button>
                             </form>
                         </td>
-                        <td th:text="${#strings.substring(general.key, 0, #strings.indexOf(general.key, '!'))} * ${general.value} + ' Talentum'"></td>
+                        <td th:text="${general.defaultPrice * cartMap.get(general)} + ' Talentum'"></td>
                     </tr>
                     <tr class="bold-left">
                         <td colspan="3">Total Price:</td>
-                        <td th:text="${cartValue != 0 ? #numbers.formatDecimal(cartValue, 0, 2) + ' Talentum' : ''} "></td>
+                        <td th:text="${cartValue} "></td>
                     </tr>
                 </tbody>
             </table>

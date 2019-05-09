@@ -10,8 +10,8 @@
     <packaging>war</packaging>
 
     <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <jetty.version>9.4.12.v20180830</jetty.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jetty.version>9.4.12.v20180830</jetty.version>
     </properties>
 
     <build>
@@ -38,13 +38,11 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
+                    <reload>automatic</reload>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
                     <httpConnector>
                         <port>8888</port>
                     </httpConnector>
-                    <!-- On some configs this causes shutdown of context on -->
-                    <!-- a page load so disabled. -->
-                    <!-- <reload>automatic</reload> -->
-                    <!-- <scanIntervalSeconds>1</scanIntervalSeconds> -->
                 </configuration>
             </plugin>
         </plugins>
