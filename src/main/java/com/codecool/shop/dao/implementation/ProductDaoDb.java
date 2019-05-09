@@ -47,6 +47,7 @@ public class ProductDaoDb implements ProductDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
         return products;
     }
@@ -69,6 +70,7 @@ public class ProductDaoDb implements ProductDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
     }
 
@@ -92,6 +94,7 @@ public class ProductDaoDb implements ProductDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
 
         return product;
@@ -106,6 +109,7 @@ public class ProductDaoDb implements ProductDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
     }
 

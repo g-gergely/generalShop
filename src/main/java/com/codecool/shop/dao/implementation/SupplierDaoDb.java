@@ -41,6 +41,7 @@ public class SupplierDaoDb implements SupplierDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
         return suppliers;
     }
@@ -61,6 +62,7 @@ public class SupplierDaoDb implements SupplierDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
 
         return supplier;
@@ -96,6 +98,7 @@ public class SupplierDaoDb implements SupplierDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
 
         return supplier;

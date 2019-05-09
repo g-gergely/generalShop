@@ -43,6 +43,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
         return categories;
     }
@@ -64,6 +65,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
 
         return category;
@@ -93,6 +95,7 @@ public class ProductCategoryDaoDb implements ProductCategoryDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Database not found", e);
         }
 
         return category;
