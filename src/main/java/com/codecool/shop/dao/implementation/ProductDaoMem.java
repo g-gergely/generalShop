@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 
+import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
@@ -63,15 +64,16 @@ public class ProductDaoMem implements ProductDao {
     public List<Product> getProducts(String category, String supplier){
         Stream<Product> productStream = instance.getAll().stream();
 
-        productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
-        productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
-
-        List<Product> productList = productStream.collect(Collectors.toList());
-
-        if(productList.size() == 0){
+        if(ProductCategoryDaoMem.getInstance().find(category) != null &&
+            SupplierDaoMem.getInstance().find(supplier) != null){
+            productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
+            productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
+        } else {
             throw new NullPointerException("No such category or supplier");
         }
 
-        return productList;
+
+
+        return productStream.collect(Collectors.toList());
     }
 }

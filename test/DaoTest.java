@@ -22,6 +22,9 @@ class DaoTest {
     private Supplier testSupplier;
     private Product testProduct;
 
+    private ProductCategory unusedCategory;
+    private Supplier unusedSupplier;
+
     private Supplier falseSupplier;
     private ProductCategory falseCategory;
 
@@ -54,6 +57,9 @@ class DaoTest {
 
         falseCategory = new ProductCategory(401, "FalseCategory", "FalseLieutenant", "Let's go");
         falseSupplier = new Supplier(501, "FalseSupplier", "FalseColonel");
+
+        unusedCategory = new ProductCategory(402, "Unused", "Unkown", "Nothing");
+        unusedSupplier = new Supplier(502, "Unused", "Nothing");
     }
 
     // The following tests will run multiple times each.
@@ -65,7 +71,9 @@ class DaoTest {
     @MethodSource("getCategoryClasses")
     public void testCategoryAdd(ProductCategoryDao category){
         category.add(testCategory);
+        category.add(unusedCategory);
         assertNotNull(category.find(400));
+        assertNotNull(category.find(402));
     }
 
     @Order(2)
@@ -73,7 +81,9 @@ class DaoTest {
     @MethodSource("getSupplierClasses")
     public void testSupplierAdd(SupplierDao supplier){
         supplier.add(testSupplier);
+        supplier.add(unusedSupplier);
         assertNotNull(supplier.find(500));
+        assertNotNull(supplier.find(502));
     }
 
     @Order(3)
@@ -140,6 +150,7 @@ class DaoTest {
     @MethodSource("getProductClasses")
     public void testGetProductsByString(ProductDao product){
         assertEquals(1, product.getProducts(testCategory.getName(),testSupplier.getName()).size());
+        assertEquals(0, product.getProducts("Unused","Unused").size());
         assertThrows(NullPointerException.class, () -> product.getProducts("", ""));
         assertThrows(NullPointerException.class, () -> product.getProducts(testCategory.getName(), "jhijn"));
         assertThrows(NullPointerException.class, () -> product.getProducts("jhijn", testSupplier.getName()));
@@ -149,14 +160,14 @@ class DaoTest {
     @ParameterizedTest
     @MethodSource("getCategoryClasses")
     public void testGetAllCategories(ProductCategoryDao category){
-        assertEquals(1, category.getAll().size());
+        assertEquals(2, category.getAll().size());
     }
 
     @Order(11)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
     public void testGetAllSuppliers(SupplierDao supplier){
-        assertEquals(1, supplier.getAll().size());
+        assertEquals(2, supplier.getAll().size());
     }
 
     @Order(12)
@@ -181,6 +192,7 @@ class DaoTest {
     @MethodSource("getCategoryClasses")
     public void testCategoryRemove(ProductCategoryDao category){
         category.remove(400);
+        category.remove(402);
         assertNull(category.find(400));
         assertEquals(0, category.getAll().size());
     }
@@ -191,6 +203,7 @@ class DaoTest {
     @MethodSource("getSupplierClasses")
     public void testSupplierRemove(SupplierDao supplier){
         supplier.remove(500);
+        supplier.remove(502);
         assertNull(supplier.find(500));
         assertEquals(0, supplier.getAll().size());
     }
