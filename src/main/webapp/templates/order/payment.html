@@ -35,24 +35,22 @@
             <div class="jumbotron text-center">
                 <h1>Payment options</h1>
             </div>
-            <div class="card-text" id="payment-container">
-                <table class="table" id="payment-options-table">
-                    <tr>
-                        <form action="/confirm" method="post">
-                            <td th:each="option: ${paymentOptions}">
-                                <img class="payment-image" src="http://placehold.it/400x250/000/fff"
-                                     th:attr="src='/static/img/' + ${option} + '.png'"
-                                     alt=""/>
-
-                                <button class="btn custom-product-button" type="submit" name="option" th:value="${option}" th:text="${option}">
-                                </button>
-                            </td>
-                        </form>
-                    </tr>
-                </table>
-            </div>
             <div id="payment-back">
-                <a class="btn custom-button" href="/cart">Back</a>
+                <a class="btn custom-button" href="/checkout">Back</a>
+            </div>
+            <div id="payment-container">
+                <form action="/confirm" method="POST">
+                    <div class="row">
+                        <div class="col-12 col-md-4" th:each="option: ${paymentOptions}">
+                            <img class="payment-image" src="http://placehold.it/400x250/000/fff"
+                                 th:attr="src='/static/img/' + ${option} + '.png'"
+                                 alt=""/>
+
+                            <button class="btn custom-product-button" type="submit" name="option" th:value="${option}" th:text="${option}">
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div th:replace="footer.html :: foot"></div>
         </div>

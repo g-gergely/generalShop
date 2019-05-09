@@ -47,39 +47,61 @@
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <label for="email">E-mail address:</label>
-            <input type="text" id="email" name="email" required>
+            <input type="email" id="email" name="email" required>
             <label for="phone">Telephone number:</label>
             <input type="text" id="phone" name="phone" required>
-            <div class="address">
-                <h5>Billing address:</h5>
-                <fieldset>
-                    <label for="country">Country:</label>
-                    <input type="text" id="country" name="country" required>
-                    <label for="zipcode">Zipcode:</label>
-                    <input type="text" id="zipcode" name="zipcode" required>
-                    <label for="city">City:</label>
-                    <input type="text" id="city" name="city" required>
-                    <label for="street">Street:</label>
-                    <input type="text" id="street" name="street" required>
-                    <label for="number">Number:</label>
-                    <input type="text" id="number" name="doorNumber" required>
-                </fieldset>
-            </div>
-            <div class="address">
-                <h5>Shipping address:</h5>
-                <p>You can modify your shipping address below if it is different from your billing address.</p>
-                <fieldset>
-                    <label for="s-country">Country:</label>
-                    <input type="text" id="s-country" name="sCountry">
-                    <label for="s-zipcode">Zipcode:</label>
-                    <input type="text" id="s-zipcode" name="sZipcode">
-                    <label for="s-city">City:</label>
-                    <input type="text" id="s-city" name="sCity">
-                    <label for="s-street">Street:</label>
-                    <input type="text" id="s-street" name="sStreet">
-                    <label for="s-number">Number:</label>
-                    <input type="text" id="s-number" name="sDoorNumber">
-                </fieldset>
+            <div class="row no-gutters">
+                <div class="address col-12 col-md-6">
+                    <h5>Billing address:</h5>
+                    <table>
+                        <tr>
+                            <td><label for="country">Country:</label></td>
+                            <td><input type="text" id="country" name="country" required><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="zipcode">Zipcode:</label></td>
+                            <td><input type="text" id="zipcode" name="zipcode" required><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="city">City:</label></td>
+                            <td><input type="text" id="city" name="city" required><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="street">Street:</label></td>
+                            <td><input type="text" id="street" name="street" required><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="number">Number:</label></td>
+                            <td><input type="text" id="number" name="doorNumber" required></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="address col-12 col-md-6">
+                    <h5>Shipping address:</h5>
+                    <table>
+                        <tr>
+                            <td><label for="s-country">Country:</label></td>
+                            <td><input type="text" id="s-country" name="sCountry"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="s-zipcode">Zipcode:</label></td>
+                            <td><input type="text" id="s-zipcode" name="sZipcode"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="s-city">City:</label></td>
+                            <td><input type="text" id="s-city" name="sCity"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="s-street">Street:</label></td>
+                            <td><input type="text" id="s-street" name="sStreet"><br></td>
+                        </tr>
+                        <tr>
+                            <td><label for="s-number">Number:</label></td>
+                            <td><input type="text" id="s-number" name="sDoorNumber"></td>
+                        </tr>
+                    </table>
+                    <p>Please modify your shipping address if it is different from your billing address.</p>
+                </div>
             </div>
             <input type="submit" value="Submit" class="btn custom-button">
         </form>

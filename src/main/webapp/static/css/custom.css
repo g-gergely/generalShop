@@ -1,10 +1,11 @@
-* {
-    margin: 0;
-    padding: 0;
-}
+/* general */
 
 html, body {
+    width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -30,6 +31,40 @@ h1 {
     font-family: 'Chelsea Market', cursive;
     font-size: 3em;
 }
+
+.jumbotron {
+    height: 80px;
+    padding: 15px;
+    background-color: transparent;
+}
+
+.custom-button {
+    background-color: darkslateblue;
+    color: white;
+}
+.custom-product-button {
+    background-color: slateblue;
+    color: white;
+}
+
+.custom-button:hover, .custom-product-button:hover {
+    box-shadow: 0 0 10px black;
+    color: white;
+}
+
+#footer {
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    margin-top: 3rem;
+}
+
+/* home */
 
 #search-container {
     display: inline-block;
@@ -65,12 +100,6 @@ img {
     text-align: center;
 }
 
-.jumbotron {
-    height: 80px;
-    padding: 15px;
-    background-color: transparent;
-}
-
 #current-categ {
     text-align: center;
     width: 80%;
@@ -80,18 +109,6 @@ img {
 #current-categ-name {
     font-size: 24px;
     font-weight: bold;
-}
-
-#footer {
-    text-align: center;
-    width: 100%;
-    color: #ffffff;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
-    margin-top: 3rem;
 }
 
 .filter {
@@ -117,6 +134,8 @@ img {
 .card-title {
     font-weight: bold;
 }
+
+/* cart */
 
 .table {
     background-color: rgba(255, 255, 255, 0.65);
@@ -155,24 +174,31 @@ span {
     margin-left: 10%;
 }
 
-.confirmation-message {
-    padding: 50px;
-    background-color: rgba(255, 255, 255, 0.65);
-    width: 80%;
-    margin: 30px;
-}
 
 #back-to-cart {
     text-align: center;
     margin-bottom: 20px;
-
 }
+
+/* checkout */
+
 #form-container {
     width: 80%;
     margin: 0 auto;
     background-color: rgba(255, 255, 255, 0.65);
     padding-top: 30px;
     padding-bottom: 50px;
+}
+#form-container .address {
+    padding: 20px;
+}
+
+#form-container .address table {
+    margin: 0 auto;
+}
+
+#form-container .address table td:first-child{
+    width: 150px;
 }
 
 #form-container .address h5 {
@@ -181,20 +207,14 @@ span {
     margin-bottom: 15px;
     font-weight: bold;
 }
+
 #form-container .address p {
     text-align: center;
-}
-
-#form-container .address fieldset {
-    width: 90%;
-    margin: 0 auto;
+    font-size: 14px;
 }
 
 #form-container form label, #form-container form input {
     display: block;
-}
-#form-container form .address input, #form-container form .address label {
-    display: inline;
 }
 
 #form-container form label {
@@ -207,7 +227,16 @@ span {
 #form-container form input {
     width: 300px;
     margin: 0 auto;
-    padding: 3px;
+    padding: 2px;
+}
+
+#form-container form .address input {
+    width: 250px;
+}
+
+#form-container form .address label, #form-container form .address input {
+    display: inline;
+    margin: 5px 0;
 }
 
 #form-container form input[type=submit] {
@@ -218,27 +247,30 @@ span {
     cursor: pointer;
 }
 
-#form-container form #zipcode, #form-container form #s-zipcode, #form-container form #number, #form-container form #s-number {
-    width: 100px;
-}
-#form-container form #country, #form-container form #s-country, #form-container form #street, #form-container form #s-street {
-    width: 150px;
-}
-.custom-button {
-    background-color: darkslateblue;
-    color: white;
-}
-.custom-product-button {
-    background-color: slateblue;
-    color: white;
+/* payment */
+
+#payment-container {
+    width: 60%;
+    margin: 30px auto;
+    background-color: rgba(255, 255, 255, 0.65);
 }
 
-.custom-button:hover, .custom-product-button:hover {
-    box-shadow: 0 0 10px black;
-    color: white;
+.payment-image {
+    display: block;
+    margin: 20px auto;
 }
 
-.wrapper #payment-container {
-    width: 50%;
-    margin: 0 auto;
+/* confirmation */
+
+#back-to-home {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#confirmation-message {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.65);
+    width: 80%;
+    margin: 30px auto;
+    text-align: center;
 }
