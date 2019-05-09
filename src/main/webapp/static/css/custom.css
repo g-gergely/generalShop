@@ -21,79 +21,6 @@ body {
     min-height: 100%;
 }
 
-.centered {
-    text-align: center;
-}
-
-.bold-left {
-    font-weight: bold;
-    text-align: left;
-}
-
-.flex-row-reverse {
-    margin-right: 2%;
-}
-
-.glyphicon {
-    margin-right: 5px;
-}
-
-.thumbnail {
-    margin-bottom: 20px;
-    padding: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-}
-
-.thumbnail img {
-    margin-top: 10px;
-}
-
-.item.list-group-item {
-    float: none;
-    width: 100%;
-    background-color: #fff;
-    margin-bottom: 10px;
-}
-
-.item.list-group-item:nth-of-type(odd):hover, .item.list-group-item:hover {
-    background: #428bca;
-}
-
-.item.list-group-item .list-group-image {
-    margin-right: 10px;
-}
-
-.item.list-group-item .thumbnail {
-    margin-bottom: 0;
-}
-
-.item.list-group-item .caption {
-    padding: 9px 9px 0 9px;
-}
-
-.item.list-group-item:nth-of-type(odd) {
-    background: #eeeeee;
-}
-
-.item.list-group-item:before, .item.list-group-item:after {
-    display: table;
-    content: " ";
-}
-
-.item.list-group-item img {
-    float: left;
-}
-
-.item.list-group-item:after {
-    clear: both;
-}
-
-.list-group-item-text {
-    margin: 0 0 11px;
-}
-
 h1 {
     font-family: 'Chelsea Market', cursive;
     font-size: 3em;
@@ -213,7 +140,7 @@ span {
 }
 
 #cart-back {
-    margin: 10px;
+    text-align: center;
 }
 
 #products {
@@ -222,6 +149,11 @@ span {
     margin-left: 10%;
 }
 
+#back-to-cart {
+    text-align: center;
+    margin-bottom: 20px;
+
+}
 #form-container {
     width: 80%;
     margin: 0 auto;
@@ -279,4 +211,16 @@ span {
 #form-container form #country, #form-container form #s-country, #form-container form #street, #form-container form #s-street {
     width: 150px;
 }
+.custom-button {
+    background-color: darkslateblue;
+    color: white;
+}
+.custom-product-button {
+    background-color: slateblue;
+    color: white;
+}
 
+.custom-button:hover, .custom-product-button:hover {
+    box-shadow: 0 0 10px black;
+    color: white;
+}

@@ -39,8 +39,8 @@
     <div class="jumbotron text-center">
         <h1>Checkout</h1>
     </div>
-    <div id="cart-back">
-        <a class="btn btn-info" th:href="@{/cart}">Back</a>
+    <div id="back-to-cart">
+        <a class="btn custom-button" href="/cart">Back</a>
     </div>
     <div id="form-container">
         <form action="/checkout" method="POST">
@@ -67,7 +67,7 @@
             </div>
             <div class="address">
                 <h5>Shipping address:</h5>
-                <p>Fill this part only if your billing address and shipping address are not the same.</p>
+                <p>You can modify your shipping address below if it is different from your billing address.</p>
                 <fieldset>
                     <label for="s-country">Country:</label>
                     <input type="text" id="s-country" name="sCountry">
@@ -81,7 +81,7 @@
                     <input type="text" id="s-number" name="sDoorNumber">
                 </fieldset>
             </div>
-            <input type="submit" value="Submit" class="btn btn-info">
+            <input type="submit" value="Submit" class="btn custom-button">
         </form>
     </div>
 
