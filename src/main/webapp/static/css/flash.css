@@ -1,0 +1,11 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-image: url("/static/img/flashpaper.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background 3s linear;
+}
