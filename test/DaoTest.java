@@ -91,11 +91,25 @@ class DaoTest {
         assertEquals("RomanCategory", category.find(400).getName());
     }
 
+    @Order(4)
+    @ParameterizedTest
+    @MethodSource("getCategoryClasses")
+    public void testCategoryFindByString(ProductCategoryDao category){
+        assertEquals(400, category.find("RomanCategory").getId());
+    }
+
     @Order(5)
     @ParameterizedTest
     @MethodSource("getSupplierClasses")
     public void testSupplierFind(SupplierDao supplier){
         assertEquals("RomanSupplier", supplier.find(500).getName());
+    }
+
+    @Order(4)
+    @ParameterizedTest
+    @MethodSource("getSupplierClasses")
+    public void testSupplierFindByString(SupplierDao supplier){
+        assertEquals(500, supplier.find("RomanSupplier").getId());
     }
 
     @Order(6)
