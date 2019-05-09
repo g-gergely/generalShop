@@ -8,16 +8,11 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 </head>
 <body>
-    <div id="wrapper" class="confirm-centered">
+    <div id="wrapper" class="centered">
         <div class="card-text confirmation-message" id="cart-container">
             <div>
                 <p>Payment is processed. Thank you for your order.</p>
             </div>
-        </div>
-        <div>
-            <form action="/confirm" method="post">
-                <button type="submit">Send email</button>
-            </form>
         </div>
         <div th:replace="footer.html :: foot"></div>
     </div>
