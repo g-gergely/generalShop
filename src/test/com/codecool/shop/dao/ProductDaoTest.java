@@ -6,15 +6,15 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductDaoTest {
 
@@ -51,7 +51,6 @@ public class ProductDaoTest {
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testProductFindByID(ProductDao product){
-        product.add(test);                                                    //If i don't add again, it fails the ProductDaoMem Test!
         assertEquals("Oda Nobunaga", product.find(100).getName());
     }
 
@@ -113,11 +112,26 @@ public class ProductDaoTest {
     @Order(11)
     @ParameterizedTest
     @MethodSource("getProductClasses")
+    public void testProductGetProductByFalseCategory(ProductDao product){
+        assertEquals(1, product.getProducts(testSupplier,falseCategory).size());
+    }
+
+    @Order(12)
+    @ParameterizedTest
+    @MethodSource("getProductClasses")
+    public void testProductGetProductByFalseSupplier(ProductDao product){
+        assertEquals(1, product.getProducts(falseSupplier,testCategory).size());
+    }
+
+
+    @Order(13)
+    @ParameterizedTest
+    @MethodSource("getProductClasses")
     public void testProductGetProductByFalseObject(ProductDao product){
         assertEquals(0, product.getProducts(falseSupplier,falseCategory).size());
     }
 
-    @Order(12)
+    @Order(14)
     @ParameterizedTest
     @MethodSource("getProductClasses")
     public void testProductRemove(ProductDao product){
