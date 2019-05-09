@@ -9,15 +9,11 @@ public class BaseModel {
     protected String name;
     protected String description;
 
-    public BaseModel(String name) {
-        this.name = name;
-    }
 
     public BaseModel(String name, String description) {
         this.name = name;
         this.description = description;
     }
-
 
     public int getId() {
         return id;
@@ -39,9 +35,6 @@ public class BaseModel {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public String toString() {
