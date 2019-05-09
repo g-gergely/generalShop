@@ -147,7 +147,9 @@ public class ConfirmationController extends HttpServlet {
         Map<Product, Integer> cartContent = new LinkedHashMap<>();
         if (cart != null) {
             for (Integer prodId : cart.getCart().keySet()) {
-                cartContent.put(ProductDaoDb.getInstance().find(prodId), cart.getCart().get(prodId));
+                Product product = ProductDaoDb.getInstance().find(prodId);
+                int amount = cart.getCart().get(prodId);
+                cartContent.put(product, amount);
             }
         }
         return cartContent;
