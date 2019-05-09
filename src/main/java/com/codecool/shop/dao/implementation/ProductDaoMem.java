@@ -60,17 +60,18 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
-    public List<Product> getProducts(String category, String supplier) {
+    public List<Product> getProducts(String category, String supplier){
         Stream<Product> productStream = instance.getAll().stream();
 
-        if (!category.equals("")) {
-            productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
+        productStream = productStream.filter(product -> product.getProductCategory().getName().equals(category));
+        productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
+
+        List<Product> productList = productStream.collect(Collectors.toList());
+
+        if(productList.size() == 0){
+            throw new NullPointerException("No such category or supplier");
         }
 
-        if (!supplier.equals("")) {
-            productStream = productStream.filter(product -> product.getSupplier().getName().equals(supplier));
-        }
-
-        return productStream.collect(Collectors.toList());
+        return productList;
     }
 }

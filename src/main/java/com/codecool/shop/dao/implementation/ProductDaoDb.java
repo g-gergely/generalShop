@@ -134,11 +134,16 @@ public class ProductDaoDb implements ProductDao {
     }
 
     @Override
-    public List<Product> getProducts(String category, String supplier) {
-        int supplierId = SupplierDaoDb.getInstance().find(supplier).getId();
-        int categoryId = ProductCategoryDaoDb.getInstance().find(category).getId();
-        String sql = "SELECT * FROM product WHERE supplier = " + supplierId +
-                " AND product_category = " + categoryId +";";
+    public List<Product> getProducts(String category, String supplier) throws NullPointerException{
+        String sql = "";
+        try {
+            int supplierId = SupplierDaoDb.getInstance().find(supplier).getId();
+            int categoryId = ProductCategoryDaoDb.getInstance().find(category).getId();
+            sql = "SELECT * FROM product WHERE supplier = " + supplierId +
+                    " AND product_category = " + categoryId +";";
+        } catch (NullPointerException e){
+            throw new NullPointerException("Invalid category or supplier.");
+        }
         return executeQuery(sql);
     }
 }
