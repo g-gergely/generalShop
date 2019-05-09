@@ -140,9 +140,9 @@ class DaoTest {
     @MethodSource("getProductClasses")
     public void testGetProductsByString(ProductDao product){
         assertEquals(1, product.getProducts(testCategory.getName(),testSupplier.getName()).size());
-        assertEquals(0, product.getProducts("jhin","jinihbn").size());
-        assertEquals(0, product.getProducts(testCategory.getName(), "gubgbg").size());
-        assertEquals(0, product.getProducts("ubzb", testSupplier.getName()).size());
+        assertThrows(NullPointerException.class, () -> product.getProducts("", ""));
+        assertThrows(NullPointerException.class, () -> product.getProducts(testCategory.getName(), "jhijn"));
+        assertThrows(NullPointerException.class, () -> product.getProducts("jhijn", testSupplier.getName()));
     }
 
     @Order(10)
