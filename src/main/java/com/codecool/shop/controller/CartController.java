@@ -63,7 +63,9 @@ public class CartController extends HttpServlet {
         Map<Product, Integer> cartContent = new LinkedHashMap<>();
         if (cart != null) {
             for (Integer prodId : cart.getCart().keySet()) {
-                cartContent.put(productDataStore.find(prodId), cart.getCart().get(prodId));
+                Product product = productDataStore.find(prodId);
+                int amount = cart.getCart().get(prodId);
+                cartContent.put(product, amount);
             }
         }
         return cartContent;
