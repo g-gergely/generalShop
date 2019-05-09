@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DaoTest {
 
-    //these will be initialized before the tests run
+    //These will be initialized before the tests run.
     private ProductCategory testCategory;
     private Supplier testSupplier;
     private Product testProduct;
@@ -28,14 +28,14 @@ class DaoTest {
     private Supplier falseSupplier;
     private ProductCategory falseCategory;
 
-    //create a stream that holds an instance of every class that implements ProductCategoryDao
+
+    //Create a streams that hold an instance of every class that implements ProductCategoryDao / SupplierDao and ProductDao.
     private static Stream<ProductCategoryDao> getCategoryClasses() {
         return Stream.of(
                 ProductCategoryDaoMem.getInstance(),
                 ProductCategoryDaoDb.getInstance());
     }
 
-    //create a stream that holds an instance of every class that implements SupplierDao
     private static Stream<SupplierDao> getSupplierClasses() {
         return Stream.of(
                 SupplierDaoMem.getInstance(),
@@ -48,7 +48,11 @@ class DaoTest {
                 ProductDaoDb.getInstance());
     }
 
-    //initialize a ProductCategory and a Supplier object with these attributes:
+    /*
+    Initialize a ProductCategory, a Supplier and a Product with these attributes:
+    We also needed a category and a supplier that are not added to the db and memory.
+    And also one of each that are added to the db and memory, but are not used by any Product.
+    */
     @BeforeAll
     public void setUp(){
         testCategory = new ProductCategory(400, "RomanCategory", "Lieutenant", "Let's go");
@@ -62,9 +66,11 @@ class DaoTest {
         unusedSupplier = new Supplier(502, "Unused", "Nothing");
     }
 
-    // The following tests will run multiple times each.
-    // They will be called using every instance that we have created in the getCategoryClasses and in the getSupplierClasses methods.
-    // If we have 2 instances in getCategoryClasses(), the first test will run 2 times, if we had 3, it would run 3 etc.
+    /*
+     The following tests will run multiple times each.
+     They will be called using every instance that we have created in the getCategoryClasses, getSupplierClasses  and in the getProductClasses methods.
+     If we have 2 instances in getCategoryClasses(), the first test will run twice, if we had 3, it would run 3 times etc.
+    */
 
     @Order(1)
     @ParameterizedTest
@@ -177,7 +183,11 @@ class DaoTest {
         assertEquals(1, product.getAll().size());
     }
 
-    //remove is left for last as it will remove the data from the database as well
+    /*
+    Remove is left for last as it will remove the data from the database as well.
+    We start with product as category and supplier are both connected to this.
+    */
+
     @Order(15)
     @ParameterizedTest
     @MethodSource("getProductClasses")
